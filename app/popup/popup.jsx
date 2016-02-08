@@ -16,7 +16,6 @@ export default function(ComposedComponent) {
         constructor(props) {
             super(props);
             this.closePopup = (event) => {
-                console.log('close popup: ' + props.id);
                 props.dispatch(closePopup(props.id));
             };
         }
