@@ -43,7 +43,7 @@ export default function(ComposedComponent) {
             if (this.props[this.props.id]) {
 
                 // TODO: do a better calculation for the position
-                const { bottom, left } = this.props[`${this.props.id}.container`].getBoundingClientRect();
+                const { bottom, left } = this.props[`${this.props.id}.rect`];
                 this.popup.style.position = 'absolute';
                 this.popup.style.top = `${bottom}px`;
                 this.popup.style.left = `${left}px`;

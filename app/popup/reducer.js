@@ -6,13 +6,13 @@ export default function popup(state = {}, action) {
             return {
                 ...state,
                 [action.popupId]: true,
-                [`${action.popupId}.container`]: action.container
+                [`${action.popupId}.rect`]: action.rect
             };
         case CLOSE_POPUP:
             return {
                 ...state,
                 [action.popupId]: false,
-                [`${action.popupId}.container`]: null
+                [`${action.popupId}.rect`]: null
             };
         default:
             return state;

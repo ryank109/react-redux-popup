@@ -1,9 +1,9 @@
 export const OPEN_POPUP = 'OPEN_POPUP';
 export const CLOSE_POPUP = 'CLOSE_POPUP';
 
-export function openPopup(popupId, container) {
+export function openPopup(popupId, rect) {
     return {
-        container,
+        rect,
         popupId,
         type: OPEN_POPUP
     };

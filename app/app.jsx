@@ -36,10 +36,10 @@ export default class App extends Component {
     render() {
         return (
             <div className="menu">
-                <div className="menu-item" ref="menu1" onClick={this.onClickHandler('1', 'menu1')}>Playas</div>
-                <div className="menu-item" ref="menu2" onClick={this.onClickHandler('2', 'menu2')}>Colors</div>
-                <div className="menu-item" ref="menu3" onClick={this.onClickHandler('3', 'menu3')}>Numbers</div>
-                <div className="menu-item" ref="menu4" onClick={this.onClickHandler('4', 'menu4')}>Rainbow</div>
+                <div className="menu-item" onClick={this.onClickHandler('1')}>Playas</div>
+                <div className="menu-item" onClick={this.onClickHandler('2')}>Colors</div>
+                <div className="menu-item" onClick={this.onClickHandler('3')}>Numbers</div>
+                <div className="menu-item" onClick={this.onClickHandler('4')}>Rainbow</div>
                 <PopupMenu id="1" menuItems={menu1} />
                 <PopupMenu id="2" menuItems={menu2} />
                 <PopupMenu id="3" menuItems={menu3} />
@@ -48,8 +48,12 @@ export default class App extends Component {
         );
     }
 
-    onClickHandler(id, container) {
-        return () => this.props.dispatch(openPopup(id, this.refs[container]));
+    onClickHandler(id) {
+        return event => {
+            const rect = event.target.getBoundingClientRect();
+            this.props.dispatch(openPopup(id, rect));
+
+        };
     }
 }
 
