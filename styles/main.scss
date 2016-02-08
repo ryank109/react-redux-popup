@@ -1,0 +1,29 @@
+.menu {
+    display: flex;
+}
+
+.menu-item {
+    background-color: #ccc;
+    cursor: pointer;
+    flex-grow: 1;
+    margin: 5px;
+    padding: 10px;
+}
+
+.popup-menu {
+    background-color: #ccc;
+    border: 1px solid #999;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    padding: 3px 0;
+}
+
+.popup-menu-item {
+    cursor: pointer;
+    padding: 5px 20px;
+
+    &:hover {
+        background-color: #ccccff
+    }
+}
