@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { Component, PropTypes } from 'react';
-import MenuItem from 'rrp/components/popup-menu-item';
-import Popup from 'rrp/popup/popup';
+import { Popup } from 'react-redux-popup';
+import MenuItem from 'app/components/popup-menu-item';
 
 class PopupMenu extends Component {
     render() {

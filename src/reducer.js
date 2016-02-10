@@ -1,4 +1,4 @@
-import { OPEN_POPUP, CLOSE_POPUP } from 'rrp/popup/actions';
+import { OPEN_POPUP, CLOSE_POPUP } from 'rrp/actions';
 
 export default function popup(state = {}, action) {
     switch (action.type) {

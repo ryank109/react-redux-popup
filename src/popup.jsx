@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import { bindActionCreators } from 'redux';
 import { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { render, unmountComponentAtNode } from 'react-dom';
-import actions, { closePopup } from 'rrp/popup/actions';
+import * as popupActions from 'rrp/actions';
+import popupReducer from 'rrp/reducer';
 
 const PROP_TYPES = {
     id: PropTypes.string.isRequired
@@ -11,12 +11,12 @@ const PROP_TYPES = {
 
 const popupSelector = state => state.popup;
 
-export default function(ComposedComponent) {
+const Popup = function(ComposedComponent) {
     class HigherOrderedPopupComponent extends Component {
         constructor(props) {
             super(props);
             this.closePopup = (event) => {
-                props.dispatch(closePopup(props.id));
+                props.dispatch(popupActions.closePopup(props.id));
             };
         }
 
@@ -69,3 +69,9 @@ export default function(ComposedComponent) {
 
     return connect(popupSelector)(HigherOrderedPopupComponent);
 }
+
+export {
+    Popup,
+    popupActions,
+    popupReducer
+};

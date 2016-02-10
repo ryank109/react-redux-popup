@@ -4,5 +4,10 @@
         "react-require",
         "transform-object-rest-spread",
         "transform-react-jsx"
-    ]
+    ],
+    env: {
+        development: {
+            presets: ["react-hmre"]
+        }
+    }
 }

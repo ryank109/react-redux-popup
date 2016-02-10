@@ -15,5 +15,3 @@ export function closePopup(popupId) {
         type: CLOSE_POPUP
     }
 }
-
-export default { openPopup, closePopup };
