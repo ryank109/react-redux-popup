@@ -2,7 +2,7 @@
   "name": "react-redux-popup",
   "version": "0.0.1",
   "description": "React redux popup",
-  "main": "src/popup.jsx",
+  "main": "lib/react-redux-popup.js",
   "scripts": {
     "clean": "rimraf lib",
     "build": "webpack --config webpack.config.js --progress --profile --colors",
