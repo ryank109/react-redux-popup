@@ -1,8 +1,7 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
-
-import { openPopup } from 'rrp/popup/actions';
-import PopupMenu from 'rrp/components/popup-menu';
+import { popupActions } from 'react-redux-popup';
+import PopupMenu from 'app/components/popup-menu';
 
 const menu1 = [
     { label: 'brian' },
@@ -51,7 +50,7 @@ export default class App extends Component {
     onClickHandler(id) {
         return event => {
             const rect = event.target.getBoundingClientRect();
-            this.props.dispatch(openPopup(id, rect));
+            this.props.dispatch(popupActions.openPopup(id, rect));
 
         };
     }

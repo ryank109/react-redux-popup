@@ -1,0 +1,37 @@
+{
+  "name": "react-redux-popup-example-app",
+  "version": "0.0.1",
+  "description": "React redux popup example app",
+  "main": "main.jsx",
+  "scripts": {
+    "start": "node devServer.js"
+  },
+  "author": "Ryan Kim",
+  "devDependencies": {
+    "babel-core": "^6.5.1",
+    "babel-loader": "^6.2.2",
+    "babel-plugin-react-require": "^2.1.0",
+    "babel-plugin-transform-object-rest-spread": "^6.5.0",
+    "babel-plugin-transform-react-jsx": "^6.5.0",
+    "babel-preset-es2015": "^6.5.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-react-hmre": "^1.1.0",
+    "css-loader": "^0.23.1",
+    "express": "^4.13.4",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.8.5",
+    "node-sass": "^3.4.2",
+    "sass-loader": "^3.1.2",
+    "webpack": "^1.12.13",
+    "webpack-dev-middleware": "^1.5.1",
+    "webpack-hot-middleware": "^2.6.4"
+  },
+  "dependencies": {
+    "lodash": "^4.3.0",
+    "react": "^0.14.6",
+    "react-dom": "^0.14.6",
+    "react-redux": "^4.4.0",
+    "react-redux-popup": "ryank109/react-redux-popup#refactor",
+    "redux": "^3.3.1"
+  }
+}
