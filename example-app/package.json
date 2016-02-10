@@ -4,7 +4,6 @@
   "description": "React redux popup example app",
   "main": "main.jsx",
   "scripts": {
-    "build": "webpack --config webpack.config.js --progress --profile --colors",
     "start": "node devServer.js"
   },
   "author": "Ryan Kim",
