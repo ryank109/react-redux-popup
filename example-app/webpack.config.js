@@ -30,7 +30,7 @@ var mainCss = new ExtractTextPlugin("main.css");
 
 module.exports = {
   entry: {
-    main: ['./example-app/main.jsx', 'webpack-hot-middleware/client'],
+    main: ['./main.jsx', 'webpack-hot-middleware/client'],
     vendor: VENDOR_DEPENDENCIES
   },
 
@@ -42,13 +42,11 @@ module.exports = {
 
   resolve: {
     alias: {
-      app: path.resolve(__dirname, 'example-app')
+      app: __dirname
     },
     root: path.join(__dirname, ''),
     modulesDirectories: [
-      'node_modules',
-      'example-app',
-      '../lib'
+      'node_modules'
     ],
     extensions: ['', '.js', '.jsx']
   },
