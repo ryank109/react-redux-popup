@@ -14,7 +14,7 @@ Object.assign(env, {
 });
 
 module.exports = {
-  entry: './src/popup.jsx',
+  entry: './src/index.js',
 
   output: {
     filename: 'react-redux-popup.js',
@@ -24,12 +24,6 @@ module.exports = {
   },
 
   externals: {
-    'lodash': {
-      root: 'Lodash',
-      commonjs2: 'lodash',
-      commonjs: 'lodash',
-      amd: 'lodash'
-    },
     'react': {
       root: 'React',
       commonjs2: 'react',

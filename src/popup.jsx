@@ -1,9 +1,7 @@
-import _ from 'lodash';
 import { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { render, unmountComponentAtNode } from 'react-dom';
 import * as popupActions from 'rrp/actions';
-import popupReducer from 'rrp/reducer';
 
 const PROP_TYPES = {
     id: PropTypes.string.isRequired
@@ -11,7 +9,7 @@ const PROP_TYPES = {
 
 const popupSelector = state => state.popup;
 
-const Popup = function(ComposedComponent) {
+export default function(ComposedComponent) {
     class HigherOrderedPopupComponent extends Component {
         constructor(props) {
             super(props);
@@ -49,10 +47,10 @@ const Popup = function(ComposedComponent) {
                 this.popup.style.left = `${left}px`;
                 render(<ComposedComponent {...this.props} />, this.popup);
 
-                _.defer(() => window.addEventListener('mouseup', this.closePopup));
+                setTimeout(() => window.addEventListener('mouseup', this.closePopup), 0);
             } else {
                 unmountComponentAtNode(this.popup);
-                _.defer(() => window.removeEventListener('mouseup', this.closePopup));
+                setTimeout(() => window.removeEventListener('mouseup', this.closePopup), 0);
             }
         }
 
@@ -69,9 +67,3 @@ const Popup = function(ComposedComponent) {
 
     return connect(popupSelector)(HigherOrderedPopupComponent);
 }
-
-export {
-    Popup,
-    popupActions,
-    popupReducer
-};

@@ -27,12 +27,9 @@
     "webpack": "^1.12.11"
   },
   "peerDependencies": {
-    "lodash": "*",
     "react": "*",
     "react-dom": "*",
     "react-redux": "*",
     "redux": "*"
-  },
-  "dependencies": {
   }
 }
