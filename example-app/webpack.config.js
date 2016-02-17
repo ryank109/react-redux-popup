@@ -4,16 +4,6 @@ var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-var VENDOR_DEPENDENCIES = [
-  'lodash',
-  'react',
-  'react-dom',
-  'react-redux',
-  'react-redux-popup',
-  'redux',
-  'webpack-hot-middleware/client'
-];
-
 var NODE_ENV = process.env.NODE_ENV;
 var env = {
   production: NODE_ENV === 'production',
@@ -30,8 +20,7 @@ var mainCss = new ExtractTextPlugin("main.css");
 
 module.exports = {
   entry: {
-    main: ['./main.jsx', 'webpack-hot-middleware/client'],
-    vendor: VENDOR_DEPENDENCIES
+    main: ['./main.jsx', 'webpack-hot-middleware/client']
   },
 
   output: {
@@ -42,12 +31,11 @@ module.exports = {
 
   resolve: {
     alias: {
-      app: __dirname
+      app: __dirname,
+      rrp: path.resolve(__dirname, '../src'),
+      'react-redux-popup': path.resolve(__dirname, '../src')
     },
     root: path.join(__dirname, ''),
-    modulesDirectories: [
-      'node_modules'
-    ],
     extensions: ['', '.js', '.jsx']
   },
 
@@ -58,7 +46,6 @@ module.exports = {
       __PRODUCTION__: env.production,
       __CURRENT_ENV__: '\'' + (NODE_ENV) + '\''
     }),
-    new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.js"),
     mainCss,
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
@@ -68,7 +55,6 @@ module.exports = {
     loaders: [
       {
         test: /\.js$|\.jsx$/,
-        exclude: 'node_modules',
         loader: 'babel'
       },
       {
