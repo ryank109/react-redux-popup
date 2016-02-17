@@ -10,7 +10,7 @@ class PopupMenu extends Component {
 
     renderMenuItems() {
         return _.map(this.props.menuItems, item => {
-            return <MenuItem {...item} />;
+            return <MenuItem {...item} key={item.label}/>;
         });
     }
 }
