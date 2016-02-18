@@ -42,9 +42,11 @@ export default function(ComposedComponent) {
             if (!this.popup) { return; }
             if (this.props[this.props.id]) {
                 this.popup.style.position = 'absolute';
+                this.popup.style.display = null;
                 findDOMNode(render(<ComposedComponent {...this.props} />, this.popup));
                 this.calculatePosition(this.popup);
             } else {
+                this.popup.style.display = 'none';
                 unmountComponentAtNode(this.popup);
             }
         }

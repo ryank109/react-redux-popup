@@ -41,12 +41,7 @@ export default function(ComposedComponent) {
         renderPopup() {
             if (!this.popup) { return; }
             super.renderPopup();
-
-            if (this.props[this.props.id]) {
-                this.layover.style.display = 'block';
-            } else {
-                this.layover.style.display = 'none';
-            }
+            this.layover.style.display = this.props[this.props.id] ? null : 'none';
         }
     }
 
