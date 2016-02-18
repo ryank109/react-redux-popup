@@ -5,7 +5,8 @@ import * as popupActions from 'rrp/actions';
 
 const PROP_TYPES = {
     id: PropTypes.string.isRequired,
-    layoverClassName: PropTypes.string
+    layoverClassName: PropTypes.string,
+    popupClassName: PropTypes.string
 };
 
 export default function(ComposedComponent) {

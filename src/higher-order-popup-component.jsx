@@ -4,7 +4,8 @@ import { findDOMNode, render, unmountComponentAtNode } from 'react-dom';
 import * as popupActions from 'rrp/actions';
 
 const PROP_TYPES = {
-    id: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
+    popupClassName: PropTypes.string
 };
 
 export const popupSelector = state => state.popup;
@@ -13,6 +14,9 @@ export default function(ComposedComponent) {
     class HigherOrderPopupComponent extends Component {
         componentWillMount() {
             this.popup = document.createElement('div');
+            if (this.props.popupClassName) {
+                this.popup.className = this.props.popupClassName;
+            }
             document.body.appendChild(this.popup);
             this.renderPopup();
         }
