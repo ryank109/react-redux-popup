@@ -3,8 +3,16 @@
 This is set of higher order components that enable popup behavior using react and redux.  I've tried to not define any styles on it so that the user can define their own style.  At least that's what I'm shooting for, but that might change in the future, based on the needs...
 
 ### Higher Order Components
- - Modal - creates a modal in the center of the screen with layover, so that nothing can be clicked outside.  Must dispatch `closePopup` from the modal in order to close it
- - Popup - creates a popup on the location specified in `options` argument on `openPopup`.  Clicking outside of the popup should close this popup or with dispatching `closePopup` action.
+ - **Modal** - creates a modal in the center of the screen with layover, so that nothing can be clicked outside.  Must dispatch `closePopup` from the modal in order to close it
+   - Properties:
+     - `id` - required id
+     - `popupClassName` - the container style class name
+     - `layoverClassName` - the layover style class name
+
+ - **Popup** - creates a popup on the location specified in `options` argument on `openPopup`.  Clicking outside of the popup should close this popup or with dispatching `closePopup` action.
+   - Properties:
+     - `id` - required id
+     - `popupClassName` - the container style class name
 
 ### Actions
  - `openPopup(id, [options])`
