@@ -2,11 +2,11 @@ import { connect } from 'react-redux';
 import HigherOrderPopupComponent, { popupSelector } from 'rrp/higher-order-popup-component';
 import * as popupActions from 'rrp/actions';
 
-export default function(ComposedComponent) {
-    class Popup extends HigherOrderPopupComponent(ComposedComponent) {
+export default function(ComposedComponent, store) {
+    class Popup extends HigherOrderPopupComponent(ComposedComponent, store) {
         constructor(props) {
             super(props);
-            this.closePopup = (event) => {
+            this.closePopup = event => {
                 props.dispatch(popupActions.closePopup(props.id));
             };
         }

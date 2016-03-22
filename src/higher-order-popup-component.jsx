@@ -1,5 +1,5 @@
 import { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import { connect, Provider } from 'react-redux';
 import { findDOMNode, render, unmountComponentAtNode } from 'react-dom';
 import * as popupActions from 'rrp/actions';
 
@@ -10,7 +10,7 @@ const PROP_TYPES = {
 
 export const popupSelector = state => state.popup;
 
-export default function(ComposedComponent) {
+export default function(ComposedComponent, store) {
     class HigherOrderPopupComponent extends Component {
         componentWillMount() {
             this.popup = document.createElement('div');
@@ -23,7 +23,7 @@ export default function(ComposedComponent) {
 
         componentWillUnmount() {
             unmountComponentAtNode(this.popup);
-            document.removeChild(this.popup);
+            document.body.removeChild(this.popup);
             this.popup = null;
         }
 
@@ -43,7 +43,12 @@ export default function(ComposedComponent) {
             if (this.props[this.props.id]) {
                 this.popup.style.position = 'absolute';
                 this.popup.style.display = null;
-                findDOMNode(render(<ComposedComponent {...this.props} />, this.popup));
+                if (store) {
+                    render(<Provider store={store}><ComposedComponent {...this.props} /></Provider>, this.popup);
+                } else {
+                    render(<ComposedComponent {...this.props} />, this.popup);
+                }
+
                 this.calculatePosition(this.popup);
             } else {
                 this.popup.style.display = 'none';
