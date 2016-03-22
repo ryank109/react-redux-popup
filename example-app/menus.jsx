@@ -39,10 +39,10 @@ class Menus extends Component {
                 <div className="menu-item" onClick={this.onClickHandler('2')}>Colors</div>
                 <div className="menu-item" onClick={this.onClickHandler('3')}>Numbers</div>
                 <div className="menu-item" onClick={this.onClickHandler('4')}>Rainbow</div>
-                <PopupMenu id="1" menuItems={menu1} />
-                <PopupMenu id="2" menuItems={menu2} />
-                <PopupMenu id="3" menuItems={menu3} />
-                <PopupMenu id="4" menuItems={menu4} />
+                <PopupMenu id="1" menuItems={menu1} containerElementId="mainContainer" />
+                <PopupMenu id="2" menuItems={menu2} containerElementId="mainContainer" />
+                <PopupMenu id="3" menuItems={menu3} containerElementId="mainContainer" />
+                <PopupMenu id="4" menuItems={menu4} containerElementId="mainContainer" />
             </div>
         );
     }
@@ -50,10 +50,10 @@ class Menus extends Component {
     onClickHandler(id) {
         return event => {
             const rect = event.target.getBoundingClientRect();
-            this.props.dispatch(popupActions.openPopup(id, rect));
+            this.props.openPopup(id, rect);
 
         };
     }
 }
 
-export default connect()(Menus);
+export default connect(null, popupActions)(Menus);
