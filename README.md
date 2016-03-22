@@ -18,7 +18,7 @@ This is set of higher order components that enable popup behavior using react an
 
 Because the way that the popups are appended on the body, the root element that the popup is being attached doesn't have any reference to the store context.  So, if you want to nest the popup within a popup, it would throw invariant error.  Found one solution to this and which is to pass in the reference to the store when defining the component so that the popup can create a `Provider` with the store.
 
-i.e. `export default Popup(MyComponent, myStoreRef);
+i.e. `export default Popup(MyComponent, myStoreRef);`
 
 ### Actions
  - `openPopup(id, [options])`
