@@ -9,8 +9,8 @@ const PROP_TYPES = {
     popupClassName: PropTypes.string
 };
 
-export default function(ComposedComponent) {
-    class Modal extends HigherOrderPopupComponent(ComposedComponent) {
+export default function(ComposedComponent, store) {
+    class Modal extends HigherOrderPopupComponent(ComposedComponent, store) {
         constructor(props) {
             super(props);
             this.closePopup = (event) => {
