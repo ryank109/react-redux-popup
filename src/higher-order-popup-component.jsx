@@ -42,7 +42,7 @@ export default function(ComposedComponent, store) {
             if (!this.popup) { return; }
             if (this.props[this.props.id]) {
                 this.popup.style.position = 'absolute';
-                this.popup.style.display = null;
+                this.popup.style.display = 'block';
                 if (store) {
                     render(<Provider store={store}><ComposedComponent {...this.props} /></Provider>, this.popup);
                 } else {
