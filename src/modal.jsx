@@ -41,7 +41,7 @@ export default function(ComposedComponent, store) {
         renderPopup() {
             if (!this.popup) { return; }
             super.renderPopup();
-            this.layover.style.display = this.props[this.props.id] ? null : 'none';
+            this.layover.style.display = this.props[this.props.id] ? 'block' : 'none';
         }
     }
 
