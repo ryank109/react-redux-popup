@@ -28,7 +28,7 @@ export default function(ComposedComponent, store) {
         }
 
         componentWillUnmount() {
-            document.removeChild(this.layover);
+            document.body.removeChild(this.layover);
             this.layover = null;
             super.componentWillUnmount();
         }
