@@ -1,5 +1,7 @@
-import { combineReducers, createStore } from 'redux';
+import { combineReducers, compose, createStore } from 'redux';
 import { popupReducer } from 'react-redux-popup';
 
 const reducers = combineReducers({ popup: popupReducer });
-export default createStore(reducers);
+const createStoreWithMiddleware = compose(
+    window.devToolsExtension ? window.devToolsExtension() : f => f)(createStore);
+export default createStoreWithMiddleware(reducers);

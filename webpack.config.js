@@ -30,6 +30,12 @@ module.exports = {
       commonjs: 'react',
       amd: 'react'
     },
+    'react-addons-css-transition-group': {
+      root: 'ReactAddonsCssTransitionGroup"',
+      commonjs2: 'react-addons-css-transition-group',
+      commonjs: 'react-addons-css-transition-group',
+      amd: 'react-addons-css-transition-group'
+    },
     'react-dom': {
       root: 'ReactDOM',
       commonjs2: 'react-dom',
@@ -65,7 +71,7 @@ module.exports = {
     }),
     new webpack.optimize.OccurenceOrderPlugin(true),
     new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin({
+    /*new webpack.optimize.UglifyJsPlugin({
       output: {
         comments: false
       },
@@ -78,7 +84,7 @@ module.exports = {
       'process.env': {
         NODE_ENV: JSON.stringify('production')
       }
-    })
+    })*/
   ],
 
   module: {

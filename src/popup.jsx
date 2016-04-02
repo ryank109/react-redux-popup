@@ -1,7 +1,8 @@
-import { Component } from 'react';
+import { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import HigherOrderPopupComponent from 'rrp/higher-order-popup-component';
 import * as popupActions from 'rrp/actions';
+import HigherOrderPopupComponent from 'rrp/higher-order-popup-component';
+import { TYPE_POPUP } from 'rrp/popup-collection';
 import { popupSelector } from 'rrp/popup-sandbox';
 
 const PROP_TYPES = {
@@ -21,12 +22,9 @@ export default function(ComposedComponent) {
         }
 
         componentDidMount() {
-            const { bottom, left } = this.props[`${this.props.id}_rect`];
+            const { top, left } = this.props[`${this.props.id}_rect`];
             this.setState({
-                style: {
-                    left,
-                    top: bottom
-                }
+                style: { left, top }
             });
 
             window.addEventListener('mouseup', this.closePopup);
@@ -57,5 +55,5 @@ export default function(ComposedComponent) {
 
     Popup.propTypes = PROP_TYPES;
 
-    return HigherOrderPopupComponent(connect(popupSelector, popupActions)(Popup));
+    return HigherOrderPopupComponent(connect(popupSelector, popupActions)(Popup), TYPE_POPUP);
 }

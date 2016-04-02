@@ -6,7 +6,7 @@ import store from 'app/store';
 class ModalPopup extends Component {
     render() {
         return (
-            <div className="modal-container">
+            <div>
                 <label>This is modal popup</label>
                 <label>Open menu from the modal</label>
                 <Menus />

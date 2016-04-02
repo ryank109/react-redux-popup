@@ -1,17 +1,17 @@
-import _ from 'lodash';
+import { map } from 'lodash/fp';
 import { Component, PropTypes } from 'react';
 import { Popup } from 'react-redux-popup';
 import MenuItem from 'app/components/popup-menu-item';
 
 class PopupMenu extends Component {
     render() {
-        return <div className="popup-menu">{this.renderMenuItems()}</div>;
+        return <div className="popup-menu__container">{this.renderMenuItems()}</div>;
     }
 
     renderMenuItems() {
-        return _.map(this.props.menuItems, item => {
+        return map(item => {
             return <MenuItem {...item} key={item.label}/>;
-        });
+        }, this.props.menuItems);
     }
 }
 

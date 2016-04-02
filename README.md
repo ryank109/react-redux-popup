@@ -6,25 +6,21 @@ This is set of higher order components that enable popup behavior using react an
  - **Modal** - creates a modal in the center of the screen with layover, so that nothing can be clicked outside.  Must dispatch `closePopup` from the modal in order to close it
    - Properties:
      - `id` - required id
-     - `popupClassName` - the container style class name
-     - `layoverClassName` - the layover style class name
+     - `popupClassName` - the modal class name
+     - `layoverClassName` - the layover class name
+     - `style` - optional styles
 
  - **Popup** - creates a popup on the location specified in `options` argument on `openPopup`.  Clicking outside of the popup should close this popup or with dispatching `closePopup` action.
    - Properties:
      - `id` - required id
-     - `popupClassName` - the container style class name
-
-#### Passing in Store
-
-Because the way that the popups are appended on the body, the root element that the popup is being attached doesn't have any reference to the store context.  So, if you want to nest the popup within a popup, it would throw invariant error.  Found one solution to this and which is to pass in the reference to the store when defining the component so that the popup can create a `Provider` with the store.
-
-i.e. `export default Popup(MyComponent, myStoreRef);`
+     - `popupClassName` - the popup class name
+     - `style` - optional styles
 
 ### Actions
  - `openPopup(id, [options])`
     - `id`: id of the popup to open
     - `options`:
-      - `bottom`: bottom offset (absolute position)
+      - `bottom`: bottom offset
       - `left`: left offset
       - `top`: top offset
       - `right`: right offset
@@ -32,6 +28,22 @@ i.e. `export default Popup(MyComponent, myStoreRef);`
     - `id`: id of the popup to close
 
 ### Usage
+
+#### Hook to the Application
+When you want the contents of the popup to the store, or if we need to popup another popup within a popup, the store context is needed. `PopupSandbox` is the way to include the store context without having to pass in the store to the components. Include the `PopupSandbox` within the `Provider`. It doesn't matter where you define it, it just needs to be after the main app component to show the popups on top of the app.
+
+```javascript
+import { PopupSandbox } from 'react-redux-popup';
+
+render(
+    <Provider store={store}>
+        <div>
+            <App />
+            <PopupSandbox />
+        </div>
+    </Provider>
+, document.body);
+```
 
 #### Reducer
 ```javascript
@@ -72,14 +84,14 @@ class App extends Component {
         return (
             <div>
                 <button refs="button" onClick={this.openMenu.bind(this)} />
-                <PopupMenu id="popup1" />
+                <PopupMenu id="popup1" popupClassName="popup" />
             </div>
         );
     }
-    
+
     openMenu() {
-        const options = this.refs.button.getBoundingClientRect();
-        this.props.openPopup('popup1', options);
+        const rect = this.refs.button.getBoundingClientRect();
+        this.props.openPopup('popup1', { top: rect.bottom, left: rect.left });
     }
 }
 

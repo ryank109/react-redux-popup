@@ -1,5 +1,6 @@
 import { Component, PropTypes } from 'react';
 import HigherOrderPopupComponent from 'rrp/higher-order-popup-component';
+import { TYPE_MODAL } from 'rrp/popup-collection';
 
 const PROP_TYPES = {
     id: PropTypes.string.isRequired,
@@ -45,5 +46,5 @@ export default function(ComposedComponent) {
 
     Modal.propTypes = PROP_TYPES;
 
-    return HigherOrderPopupComponent(Modal);
+    return HigherOrderPopupComponent(Modal, TYPE_MODAL);
 }

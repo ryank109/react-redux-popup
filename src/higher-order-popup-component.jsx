@@ -5,10 +5,10 @@ const PROP_TYPES = {
     id: PropTypes.string.isRequired
 };
 
-export default function(ComposedComponent) {
+export default function(ComposedComponent, type) {
     class HigherOrderPopupComponent extends Component {
         componentWillMount() {
-            collection.push(<ComposedComponent key={this.props.id} {...this.props} />);
+            collection.push([ type, ComposedComponent, this.props ]);
         }
 
         componentWillUnmount() {

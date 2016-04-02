@@ -30,13 +30,13 @@ module.exports = {
   },
 
   resolve: {
-    alias: {
-      app: __dirname,
-      rrp: path.resolve(__dirname, '../src'),
-      'react-redux-popup': path.resolve(__dirname, '../src')
-    },
+    alias: { app: __dirname },
     root: path.join(__dirname, ''),
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx'],
+    modulesDirectories: [
+      'node_modules',
+      'app'
+    ],
   },
 
   plugins: [
