@@ -1,35 +1,53 @@
+import { Component } from 'react';
 import { connect } from 'react-redux';
-import HigherOrderPopupComponent, { popupSelector } from 'rrp/higher-order-popup-component';
+import HigherOrderPopupComponent from 'rrp/higher-order-popup-component';
 import * as popupActions from 'rrp/actions';
+import { popupSelector } from 'rrp/popup-sandbox';
 
-export default function(ComposedComponent, store) {
-    class Popup extends HigherOrderPopupComponent(ComposedComponent, store) {
+const PROP_TYPES = {
+    id: PropTypes.string.isRequired,
+    popupClassName: PropTypes.string,
+    style: PropTypes.object
+};
+
+export default function(ComposedComponent) {
+    class Popup extends Component {
         constructor(props) {
             super(props);
-            this.closePopup = event => {
-                props.dispatch(popupActions.closePopup(props.id));
+            this.state = {};
+            this.closePopup = () => {
+                props.closePopup(props.id);
             };
         }
 
-        componentWillMount() {
-            super.componentWillMount();
-            this.popup.addEventListener('mouseup', this.stopEvent);
+        componentDidMount() {
+            const { bottom, left } = this.props[`${this.props.id}_rect`];
+            this.setState({
+                style: {
+                    left,
+                    top: bottom
+                }
+            });
+
+            window.addEventListener('mouseup', this.closePopup);
         }
 
         componentWillUnmount() {
-            this.popup.removeEventListener('mouseup', this.stopEvent);
-            super.componentWillUnmount();
+            window.removeEventListener('mouseup', this.closePopup);
         }
 
-        renderPopup() {
-            if (!this.popup) { return; }
-            super.renderPopup();
+        render() {
+            const className = `js-popup-${this.props.id} ${this.props.popupClassName ? this.props.popupClassName : ''}`;
+            const style = {
+                ...this.state.style,
+                ...this.props.style
+            };
 
-            if (this.props[this.props.id]) {
-                setTimeout(() => window.addEventListener('mouseup', this.closePopup), 0);
-            } else {
-                setTimeout(() => window.removeEventListener('mouseup', this.closePopup), 0);
-            }
+            return (
+                <div className={className} onMouseUp={this.stopEvent} style={style}>
+                    <ComposedComponent {...this.props} />
+                </div>
+            );
         }
 
         stopEvent(event) {
@@ -37,5 +55,7 @@ export default function(ComposedComponent, store) {
         }
     }
 
-    return connect(popupSelector)(Popup);
+    Popup.propTypes = PROP_TYPES;
+
+    return HigherOrderPopupComponent(connect(popupSelector, popupActions)(Popup));
 }

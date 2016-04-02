@@ -6,14 +6,17 @@ export default function popup(state = {}, action) {
             return {
                 ...state,
                 [action.popupId]: true,
-                [`${action.popupId}.rect`]: action.rect
+                [`${action.popupId}_rect`]: action.rect
             };
         case CLOSE_POPUP:
-            return {
-                ...state,
-                [action.popupId]: false,
-                [`${action.popupId}.rect`]: null
-            };
+            const keys = Object.keys(state);
+            let newState = {};
+            keys.forEach(key => {
+                if (key !== action.popupId && key !== `${action.popupId}_rect`) {
+                    newState[key] = state[key];
+                }
+            });
+            return newState;
         default:
             return state;
     }
