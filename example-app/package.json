@@ -8,7 +8,7 @@
   },
   "author": "Ryan Kim",
   "devDependencies": {
-    "babel-core": "^6.7.2",
+    "babel-core": "^6.7.6",
     "babel-loader": "^6.2.4",
     "babel-plugin-react-require": "^2.1.0",
     "babel-plugin-transform-object-rest-spread": "^6.5.0",
@@ -22,15 +22,15 @@
     "file-loader": "^0.8.5",
     "node-sass": "^3.4.2",
     "sass-loader": "^3.1.2",
-    "webpack": "^1.12.14",
+    "webpack": "^1.12.15",
     "webpack-dev-middleware": "^1.5.1",
     "webpack-hot-middleware": "^2.10.0"
   },
   "dependencies": {
-    "lodash": "^4.6.1",
-    "react": "^0.14.7",
-    "react-dom": "^0.14.7",
-    "react-redux": "^4.4.1",
-    "redux": "^3.3.1"
+    "lodash": "^4.10.0",
+    "react": "^15.0.1",
+    "react-dom": "^15.0.1",
+    "react-redux": "^4.4.2",
+    "redux": "^3.4.0"
   }
 }
