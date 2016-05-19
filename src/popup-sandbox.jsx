@@ -45,11 +45,11 @@ Sandbox.propTypes = {
 
 Sandbox.defaultProps = {
     modalTransitionName: 'modal',
-    modalTransitionEnterTimeout: 300,
-    modalTransitionLeaveTimeout: 300,
+    modalTransitionEnterTimeout: 0,
+    modalTransitionLeaveTimeout: 0,
     popupTransitionName: 'popup',
-    popupTransitionEnterTimeout: 100,
-    popupTransitionLeaveTimeout: 100
+    popupTransitionEnterTimeout: 0,
+    popupTransitionLeaveTimeout: 0
 };
 
 export default connect(popupSelector)(Sandbox);

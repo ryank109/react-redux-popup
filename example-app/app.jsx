@@ -14,7 +14,11 @@ class App extends Component {
                 <Menus />
                 <button onClick={this.openModal.bind(this)}>Open Modal</button>
                 <ModalPopup id="modal1" popupClassName="modal-container" layoverClassName="modal-layover" closePopup={actions.closePopup}/>
-                <PopupSandbox />
+                <PopupSandbox
+                    modalTransitionEnterTimeout={300}
+                    modalTransitionLeaveTimeout={300}
+                    popupTransitionEnterTimeout={100}
+                    popupTransitionLeaveTimeout={100} />
             </div>
         );
     }
