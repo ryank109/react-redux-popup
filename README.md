@@ -2,6 +2,17 @@
 
 This is set of higher order components that enable popup behavior using react and redux.  I've tried to not define any styles on it so that the user can define their own style.  At least that's what I'm shooting for, but that might change in the future, based on the needs...
 
+### PopupSandbox Component
+This component is the component where the popups are rendered to.  So, it's important that this component is specified after the main body so that popups are rendered on top of everything else.  The properties to this component mostly deals with the animation.
+
+ - Properties:
+   - `modalTransitionName`: [default to 'modal'] used for css animation
+   - `modalTransitionEnterTimeout`: [default to 0] the modal enter animation duration in miliseconds
+   - `modalTransitionLeaveTimeout`: [default to 0] the modal leave animation duration in miliseconds
+   - `popupTransitionName`: [default to 'popup'] used for css animation
+   - `popupTransitionEnterTimeout`: [default to 0] the popup enter animation duration in miliseconds
+   - `popupTransitionLeaveTimeout`: [default to 0] the popup leave animation duration in miliseconds
+
 ### Higher Order Components
  - **Modal** - creates a modal in the center of the screen with layover, so that nothing can be clicked outside.  Must dispatch `closePopup` from the modal in order to close it
    - Properties:
@@ -20,12 +31,17 @@ This is set of higher order components that enable popup behavior using react an
  - `openPopup(id, [options])`
     - `id`: id of the popup to open
     - `options`:
-      - `bottom`: bottom offset
       - `left`: left offset
       - `top`: top offset
-      - `right`: right offset
  - `closePopup(id)`
     - `id`: id of the popup to close
+
+### Dependencies
+ - react
+ - react-addons-css-transition-group
+ - react-dom
+ - react-redux
+ - redux
 
 ### Usage
 
@@ -62,7 +78,6 @@ popup-menu.js
 ```javascript
 import { Component } from 'react';
 import { Popup } from 'react-redux-popup';
-import store from 'app/store';
 
 class PopupMenu extends Component {
     render() {
@@ -70,7 +85,7 @@ class PopupMenu extends Component {
     }
 }
 
-export default Popup(PopupMenu, store);
+export default Popup(PopupMenu);
 ```
 
 app.js
@@ -96,4 +111,37 @@ class App extends Component {
 }
 
 export default connect(null, popupActions)(App);
+```
+
+### Animation
+
+Animation support has been added with [ReactCSSTransitionGroup](https://facebook.github.io/react/docs/animation.html).
+To use, you must specify transition enter/leave timeout properties for `PopupSandbox` and define css to handle the animation and define the following styles:
+
+```css
+.modal-enter .modal-container {
+}
+.modal-enter .modal-layover {
+}
+.modal-enter.modal-enter-active .modal-container {
+}
+.modal-enter.modal-enter-active .modal-layover {
+}
+.modal-leave .modal-container {
+}
+.modal-leave .modal-layover {
+}
+.modal-leave.modal-leave-active .modal-container {
+}
+.modal-leave.modal-leave-active .modal-layover {
+}
+
+.popup-enter {
+}
+.popup-enter.popup-enter-active {
+}
+.popup-leave {
+}
+.popup-leave.popup-leave-active {
+}
 ```
