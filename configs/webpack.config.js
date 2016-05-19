@@ -14,13 +14,13 @@ Object.assign(env, {
 });
 
 module.exports = {
-  entry: './src/index.js',
+  entry: path.resolve(__dirname, '../src/index.js'),
 
   output: {
     filename: 'react-redux-popup.js',
     library: 'react-redux-popup',
     libraryTarget: 'umd',
-    path: __dirname + '/lib'
+    path: path.resolve(__dirname, '../lib')
   },
 
   externals: {
@@ -29,6 +29,12 @@ module.exports = {
       commonjs2: 'react',
       commonjs: 'react',
       amd: 'react'
+    },
+    'react-addons-css-transition-group': {
+      root: 'ReactAddonsCssTransitionGroup"',
+      commonjs2: 'react-addons-css-transition-group',
+      commonjs: 'react-addons-css-transition-group',
+      amd: 'react-addons-css-transition-group'
     },
     'react-dom': {
       root: 'ReactDOM',
@@ -46,12 +52,12 @@ module.exports = {
 
   resolve: {
     alias: {
-      rrp: path.resolve(__dirname, 'src')
+      rrp: path.resolve(__dirname, '../src')
     },
     root: path.join(__dirname, ''),
     modulesDirectories: [
-      'node_modules',
-      'src'
+      path.resolve(__dirname, '../node_modules'),
+      path.resolve(__dirname, '../src')
     ],
     extensions: ['', '.js', '.jsx']
   },
@@ -85,7 +91,7 @@ module.exports = {
     loaders: [
       {
         test: /\.js$|\.jsx$/,
-        include: path.join(__dirname, 'src'),
+        include: path.join(__dirname, '../src'),
         loader: 'babel'
       }
     ]

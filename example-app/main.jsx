@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 

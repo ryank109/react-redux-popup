@@ -1,59 +1,18 @@
 import { Component, PropTypes } from 'react';
-import { connect, Provider } from 'react-redux';
-import { findDOMNode, render, unmountComponentAtNode } from 'react-dom';
-import * as popupActions from 'rrp/actions';
+import collection from 'rrp/popup-collection';
 
 const PROP_TYPES = {
-    id: PropTypes.string.isRequired,
-    popupClassName: PropTypes.string
+    id: PropTypes.string.isRequired
 };
 
-export const popupSelector = state => state.popup;
-
-export default function(ComposedComponent, store) {
+export default function(ComposedComponent, type) {
     class HigherOrderPopupComponent extends Component {
         componentWillMount() {
-            this.popup = document.createElement('div');
-            if (this.props.popupClassName) {
-                this.popup.className = this.props.popupClassName;
-            }
-            document.body.appendChild(this.popup);
-            this.renderPopup();
+            collection.push([ type, ComposedComponent, this.props ]);
         }
 
         componentWillUnmount() {
-            unmountComponentAtNode(this.popup);
-            document.body.removeChild(this.popup);
-            this.popup = null;
-        }
-
-        componentDidUpdate() {
-            this.renderPopup();
-        }
-
-        calculatePosition(popup) {
-            // TODO: do a better calculation for the position
-            const { bottom, left } = this.props[`${this.props.id}.rect`];
-            popup.style.top = `${bottom}px`;
-            popup.style.left = `${left}px`;
-        }
-
-        renderPopup() {
-            if (!this.popup) { return; }
-            if (this.props[this.props.id]) {
-                this.popup.style.position = 'absolute';
-                this.popup.style.display = 'block';
-                if (store) {
-                    render(<Provider store={store}><ComposedComponent {...this.props} /></Provider>, this.popup);
-                } else {
-                    render(<ComposedComponent {...this.props} />, this.popup);
-                }
-
-                this.calculatePosition(this.popup);
-            } else {
-                this.popup.style.display = 'none';
-                unmountComponentAtNode(this.popup);
-            }
+            collection.remove(this.props.id);
         }
 
         render() {

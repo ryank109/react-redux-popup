@@ -1,4 +1,6 @@
 .DS_Store
+.eslintcache
 node_modules
 npm-debug.log
 example-app/example_run
+test-reports

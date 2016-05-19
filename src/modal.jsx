@@ -1,51 +1,50 @@
-import { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import HigherOrderPopupComponent, { popupSelector } from 'rrp/higher-order-popup-component';
-import * as popupActions from 'rrp/actions';
+import { Component, PropTypes } from 'react';
+import HigherOrderPopupComponent from 'rrp/higher-order-popup-component';
+import { TYPE_MODAL } from 'rrp/popup-collection';
 
 const PROP_TYPES = {
     id: PropTypes.string.isRequired,
     layoverClassName: PropTypes.string,
-    popupClassName: PropTypes.string
+    popupClassName: PropTypes.string,
+    style: PropTypes.object
 };
 
-export default function(ComposedComponent, store) {
-    class Modal extends HigherOrderPopupComponent(ComposedComponent, store) {
+export default function(ComposedComponent) {
+    class Modal extends Component {
         constructor(props) {
             super(props);
-            this.closePopup = (event) => {
-                props.dispatch(popupActions.closePopup(props.id));
+            this.state = { style: {} };
+        }
+
+        componentDidMount() {
+            const modal = document.getElementsByClassName(`js-modal-${this.props.id}`)[0];
+            this.setState({
+                style: {
+                    left: (window.innerWidth - modal.clientWidth) / 2,
+                    top: (window.innerHeight - modal.clientHeight) / 2
+                }
+            });
+        }
+
+        render() {
+            const className = `js-modal-${this.props.id} ${this.props.popupClassName ? this.props.popupClassName : ''}`;
+            const style = {
+                ...this.state.style,
+                ...this.props.style
             };
-        }
 
-        componentWillMount() {
-            this.layover = document.createElement('div');
-            if (this.props.layoverClassName) {
-                this.layover.className = this.props.layoverClassName;
-            }
-            document.body.appendChild(this.layover);
-            super.componentWillMount();
-        }
-
-        componentWillUnmount() {
-            document.body.removeChild(this.layover);
-            this.layover = null;
-            super.componentWillUnmount();
-        }
-
-        calculatePosition(popup) {
-            popup.style.left = `${(window.innerWidth - popup.clientWidth) / 2}px`;
-            popup.style.top = `${(window.innerHeight - popup.clientHeight) / 2}px`;
-        }
-
-        renderPopup() {
-            if (!this.popup) { return; }
-            super.renderPopup();
-            this.layover.style.display = this.props[this.props.id] ? 'block' : 'none';
+            return (
+                <div id={this.props.id}>
+                    <div className={this.props.layoverClassName} />
+                    <div className={className} style={style}>
+                        <ComposedComponent {...this.props} />
+                    </div>
+                </div>
+            );
         }
     }
 
     Modal.propTypes = PROP_TYPES;
 
-    return connect(popupSelector)(Modal);
+    return HigherOrderPopupComponent(Modal, TYPE_MODAL);
 }
