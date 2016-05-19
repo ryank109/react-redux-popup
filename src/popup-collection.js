@@ -12,4 +12,8 @@ popupCollection.remove = function(popupId) {
     popupCollection.splice(i, 1);
 };
 
+popupCollection.clearAll = function() {
+    popupCollection.splice(0, popupCollection.length);
+}
+
 export default popupCollection;

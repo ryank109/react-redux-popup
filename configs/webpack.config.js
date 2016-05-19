@@ -14,13 +14,13 @@ Object.assign(env, {
 });
 
 module.exports = {
-  entry: './src/index.js',
+  entry: path.resolve(__dirname, '../src/index.js'),
 
   output: {
     filename: 'react-redux-popup.js',
     library: 'react-redux-popup',
     libraryTarget: 'umd',
-    path: __dirname + '/lib'
+    path: path.resolve(__dirname, '../lib')
   },
 
   externals: {
@@ -52,12 +52,12 @@ module.exports = {
 
   resolve: {
     alias: {
-      rrp: path.resolve(__dirname, 'src')
+      rrp: path.resolve(__dirname, '../src')
     },
     root: path.join(__dirname, ''),
     modulesDirectories: [
-      'node_modules',
-      'src'
+      path.resolve(__dirname, '../node_modules'),
+      path.resolve(__dirname, '../src')
     ],
     extensions: ['', '.js', '.jsx']
   },
@@ -71,7 +71,7 @@ module.exports = {
     }),
     new webpack.optimize.OccurenceOrderPlugin(true),
     new webpack.optimize.DedupePlugin(),
-    /*new webpack.optimize.UglifyJsPlugin({
+    new webpack.optimize.UglifyJsPlugin({
       output: {
         comments: false
       },
@@ -84,14 +84,14 @@ module.exports = {
       'process.env': {
         NODE_ENV: JSON.stringify('production')
       }
-    })*/
+    })
   ],
 
   module: {
     loaders: [
       {
         test: /\.js$|\.jsx$/,
-        include: path.join(__dirname, 'src'),
+        include: path.join(__dirname, '../src'),
         loader: 'babel'
       }
     ]
