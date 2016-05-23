@@ -15,18 +15,12 @@ export default function(ComposedComponent) {
     class Popup extends Component {
         constructor(props) {
             super(props);
-            this.state = {};
             this.closePopup = () => {
                 props.closePopup(props.id);
             };
         }
 
         componentDidMount() {
-            const { top, left } = this.props[`${this.props.id}_rect`];
-            this.setState({
-                style: { left, top }
-            });
-
             window.addEventListener('mouseup', this.closePopup);
         }
 
@@ -36,10 +30,7 @@ export default function(ComposedComponent) {
 
         render() {
             const className = `js-popup-${this.props.id} ${this.props.popupClassName ? this.props.popupClassName : ''}`;
-            const style = {
-                ...this.state.style,
-                ...this.props.style
-            };
+            const style = this.props[`${this.props.id}_rect`];
 
             return (
                 <div className={className} onMouseUp={this.stopEvent} style={style}>
