@@ -1,4 +1,6 @@
 import { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { updatePopupProps } from 'rrp/actions';
 import collection from 'rrp/popup-collection';
 
 const PROP_TYPES = {
@@ -15,11 +17,16 @@ export default function(ComposedComponent, type) {
             collection.remove(this.props.id);
         }
 
+        componentWillReceiveProps(nextProps) {
+            collection.update(nextProps.id, nextProps);
+            this.props.updatePopupProps(nextProps.id, nextProps);
+        }
+
         render() {
             return null;
         }
     }
 
     HigherOrderPopupComponent.propTypes = PROP_TYPES;
-    return HigherOrderPopupComponent;
+    return connect(null, { updatePopupProps })(HigherOrderPopupComponent);
 }

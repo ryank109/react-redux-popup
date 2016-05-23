@@ -1,7 +1,10 @@
 import { Component } from 'react';
-import { Modal } from 'react-redux-popup';
+import { connect } from 'react-redux';
+import { Modal, popupActions } from 'react-redux-popup';
 import Menus from 'app/menus2';
 import store from 'app/store';
+
+const selector = state => state.modal;
 
 class ModalPopup extends Component {
     render() {
@@ -10,10 +13,18 @@ class ModalPopup extends Component {
                 <label>This is modal popup</label>
                 <label>Open menu from the modal</label>
                 <Menus />
-                <button onClick={() => this.props.closePopup(this.props.id)}>OK</button>
+                <button onClick={this.activate.bind(this)}>Activate</button>
+                <button onClick={() => this.props.dispatch(popupActions.closePopup(this.props.id))}>OK</button>
+                {this.props.isActivated && <label>Activated!</label>}
             </div>
         );
     }
+
+    activate() {
+        this.props.dispatch({
+            type: 'DO_SOMETHING'
+        });
+    }
 }
 
-export default Modal(ModalPopup, store);
+export default Modal(connect(selector)(ModalPopup));

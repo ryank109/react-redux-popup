@@ -10,7 +10,6 @@ describe('popup-collection', function() {
 
     it('should add/remove popup object to the collection', function() {
         const composedObj = {};
-        const props = { id: '1' }
         collection.push([ TYPE_POPUP, composedObj, { id: '1' } ]);
         collection.push([ TYPE_MODAL, composedObj, { id: '2' } ]);
         collection.push([ TYPE_POPUP, composedObj, { id: '3' } ]);
@@ -34,6 +33,18 @@ describe('popup-collection', function() {
         collection.remove('2');
         collection.remove('3');
         expect(collection.length).toBe(0);
+    });
+
+    it('should update props', function() {
+        const composedObj = {};
+        collection.push([ TYPE_POPUP, composedObj, { id: '1' }]);
+        collection.update('1', { id: '1', prop1: 'val1' });
+
+        expect(collection.length).toBe(1);
+        expect(collection[0]).toEqual([ TYPE_POPUP, composedObj, { id: '1', prop1: 'val1' }]);
+
+        collection.update('2', { id: '2', prop2: 'val2' });
+        expect(collection.length).toBe(1);
     });
 
     it('should clear all', function() {

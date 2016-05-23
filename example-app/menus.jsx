@@ -32,19 +32,35 @@ const menu4 = [
 ];
 
 class Menus extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            menus: [ menu1, menu2, menu3, menu4 ]
+        };
+    }
+
     render() {
         return (
             <div className="menu">
-                <div className="menu-item" onClick={this.onClickHandler('1')}>Playas</div>
-                <div className="menu-item" onClick={this.onClickHandler('2')}>Colors</div>
-                <div className="menu-item" onClick={this.onClickHandler('3')}>Numbers</div>
-                <div className="menu-item" onClick={this.onClickHandler('4')}>Rainbow</div>
-                <PopupMenu id="1" popupClassName="popup-menu" menuItems={menu1} containerElementId="mainContainer" />
-                <PopupMenu id="2" popupClassName="popup-menu" menuItems={menu2} containerElementId="mainContainer" />
-                <PopupMenu id="3" popupClassName="popup-menu" menuItems={menu3} containerElementId="mainContainer" />
-                <PopupMenu id="4" popupClassName="popup-menu" menuItems={menu4} containerElementId="mainContainer" />
+                <div className="menu-item" onClick={this.onClickHandler('0')}>Playas</div>
+                <div className="menu-item" onClick={this.onClickHandler('1')}>Colors</div>
+                <div className="menu-item" onClick={this.onClickHandler('2')}>Numbers</div>
+                <div className="menu-item" onClick={this.onClickHandler('3')}>Rainbow</div>
+                <button onClick={this.changeMenu.bind(this)}>Change Menu</button>
+                {this.renderMenus()}
             </div>
         );
+    }
+
+    renderMenus() {
+        return this.state.menus.map(
+            (menu, index) => <PopupMenu key={index} id={`${index}`} popupClassName="popup-menu" menuItems={menu} onClick={() => true}/>);
+    }
+
+    changeMenu() {
+        this.setState({
+            menus: [ menu2, menu3, menu4, menu1 ]
+        });
     }
 
     onClickHandler(id) {

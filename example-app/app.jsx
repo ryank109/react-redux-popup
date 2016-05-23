@@ -24,8 +24,8 @@ class App extends Component {
     }
 
     openModal() {
-        this.props.dispatch(popupActions.openPopup('modal1'));
+        this.props.openPopup('modal1');
     }
 }
 
-export default connect(null)(App);
+export default connect(null, popupActions)(App);
