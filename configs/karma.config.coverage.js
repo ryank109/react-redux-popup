@@ -17,7 +17,7 @@ module.exports = function(config) {
       'test-config.js': [ 'webpack', 'sourcemap' ]
     },
 
-    reporters: ['dots', 'junit'],
+    reporters: ['dots', 'junit', 'coverage'],
     junitReporter: {
       outputDir: path.join(__dirname, '../test-reports'),
       outputFile: 'test-results.xml',
@@ -29,6 +29,13 @@ module.exports = function(config) {
       module: {
         loaders: [
           { test: /\.js$|\.jsx$/, loader: 'babel' }
+        ],
+        preLoaders: [
+          {
+            test: /\.js$|\.jsx$/,
+            include: srcDir,
+            loader: 'isparta'
+          }
         ]
       },
       resolve: {
@@ -42,6 +49,14 @@ module.exports = function(config) {
     },
     webpackServer: {
       noInfo: true
+    },
+
+    coverageReporter: {
+      type: 'html',
+      dir: '../test-reports/coverage/',
+      subdir: function(browser) {
+        return browser.toLowerCase().split(/[ /-]/)[0];
+      }
     }
   });
 };
