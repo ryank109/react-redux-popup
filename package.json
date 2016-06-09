@@ -9,7 +9,7 @@
     "coverage": "NODE_ENV=test karma start ./configs/karma.config.coverage.js",
     "lint": "eslint 'src/**' --cache",
     "prepublish": "npm run clean && npm run build",
-    "test": "NODE_ENV=test karma start ./configs/karma.config.js --reporters nyan",
+    "test": "NODE_ENV=test karma start ./configs/karma.config.js",
     "test-dev": "NODE_ENV=test karma start ./configs/karma.config.js --no-single-run --browsers Chrome --reporters nyan"
   },
   "keywords": [],
