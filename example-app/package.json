@@ -4,7 +4,7 @@
   "description": "React redux popup example app",
   "main": "main.jsx",
   "scripts": {
-    "start": "npm cache clean && rm -rf node_modules && npm i && node devServer.js"
+    "start": "npm cache clean && rm -rf node_modules/react-redux-popup && npm i && node devServer.js"
   },
   "author": "Ryan Kim",
   "devDependencies": {
