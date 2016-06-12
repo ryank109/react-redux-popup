@@ -10,9 +10,14 @@ class App extends Component {
     render() {
         const actions = bindActionCreators(popupActions, this.props.dispatch);
         return (
-            <div>
-                <Menus />
+            <div
+                style={{overflow:'auto', height:'400px'}}
+                onScroll={this.scroll.bind(this)}
+                ref="main">
                 <button onClick={this.openModal.bind(this)}>Open Modal</button>
+                <div style={{height:'1000px'}}>
+                    <Menus />
+                </div>
                 <ModalPopup id="modal1" popupClassName="modal-container" layoverClassName="modal-layover" closePopup={actions.closePopup}/>
                 <PopupSandbox
                     modalTransitionEnterTimeout={300}
@@ -21,6 +26,10 @@ class App extends Component {
                     popupTransitionLeaveTimeout={100} />
             </div>
         );
+    }
+
+    scroll(event) {
+        this.props.updateScrollPosition(this.refs.main.scrollLeft, this.refs.main.scrollTop);
     }
 
     openModal() {

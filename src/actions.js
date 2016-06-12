@@ -1,7 +1,7 @@
 export const OPEN_POPUP = 'OPEN_POPUP';
 export const CLOSE_POPUP = 'CLOSE_POPUP';
 export const UPDATE_POPUP_PROPS = 'UPDATE_POPUP_PROPS';
-export const CLEAN_POPUP_STATE = 'CLEAN_POPUP_STATE';
+export const UPDATE_POPUP_SCROLL_POSITION = 'UPDATE_POPUP_SCROLL_POSITION';
 
 export function openPopup(popupId, rect) {
     return {
@@ -26,9 +26,10 @@ export function updatePopupProps(popupId, props) {
     };
 }
 
-export function cleanPopup(popupId) {
+export function updateScrollPosition(x, y) {
     return {
-        popupId,
-        type: CLEAN_POPUP_STATE
+        x,
+        y,
+        type: UPDATE_POPUP_SCROLL_POSITION
     };
 }

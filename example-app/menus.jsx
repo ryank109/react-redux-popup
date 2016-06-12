@@ -65,9 +65,9 @@ class Menus extends Component {
 
     onClickHandler(id) {
         return event => {
-            const rect = event.target.getBoundingClientRect();
-            this.props.openPopup(id, { top: rect.bottom, left: rect.left } );
-
+            const top = event.target.offsetTop + event.target.offsetHeight;
+            const left = event.target.offsetLeft;
+            this.props.openPopup(id, { top, left });
         };
     }
 }

@@ -29,11 +29,13 @@ describe('actions', function() {
         });
     })
 
-    it('should return clean popup action', function() {
-        const popupId = 'popupId1';
-        expect(Actions.cleanPopup(popupId)).toEqual({
-            popupId,
-            type: Actions.CLEAN_POPUP_STATE
+    it('should return update scroll position action', function() {
+        const x = 10;
+        const y = 11;
+        expect(Actions.updateScrollPosition(x, y)).toEqual({
+            x,
+            y,
+            type: Actions.UPDATE_POPUP_SCROLL_POSITION
         });
     })
 });

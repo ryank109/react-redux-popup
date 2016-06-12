@@ -30,7 +30,16 @@ export default function(ComposedComponent) {
 
         render() {
             const className = `js-popup-${this.props.id} ${this.props.popupClassName ? this.props.popupClassName : ''}`;
-            const style = this.props[`${this.props.id}_rect`];
+            let style = null;
+            const rectId = `${this.props.id}_rect`;
+            if (this.props[rectId]) {
+                style = {
+                    ...this.props[rectId]
+                };
+                const { offsetX, offsetY } = this.props;
+                style.left -= (offsetX ? offsetX : 0);
+                style.top -= (offsetY ? offsetY : 0);
+            }
 
             return (
                 <div className={className} onMouseUp={this.stopEvent} style={style}>
