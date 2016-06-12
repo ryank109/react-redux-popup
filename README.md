@@ -2,17 +2,6 @@
 
 This is set of higher order components that enable popup behavior using react and redux.  I've tried to not define any styles on it so that the user can define their own style.  At least that's what I'm shooting for, but that might change in the future, based on the needs...
 
-### PopupSandbox Component
-This component is the component where the popups are rendered to.  So, it's important that this component is specified after the main body so that popups are rendered on top of everything else.  The properties to this component mostly deals with the animation.
-
- - Properties:
-   - `modalTransitionName`: [default to 'modal'] used for css animation
-   - `modalTransitionEnterTimeout`: [default to 0] the modal enter animation duration in miliseconds
-   - `modalTransitionLeaveTimeout`: [default to 0] the modal leave animation duration in miliseconds
-   - `popupTransitionName`: [default to 'popup'] used for css animation
-   - `popupTransitionEnterTimeout`: [default to 0] the popup enter animation duration in miliseconds
-   - `popupTransitionLeaveTimeout`: [default to 0] the popup leave animation duration in miliseconds
-
 ### Higher Order Components
  - **Modal** - creates a modal in the center of the screen with layover, so that nothing can be clicked outside.  Must dispatch `closePopup` from the modal in order to close it
    - Properties:
@@ -27,6 +16,17 @@ This component is the component where the popups are rendered to.  So, it's impo
      - `popupClassName` - the popup class name
      - `style` - optional styles
 
+### PopupSandbox Component
+This component is the component where the popups are rendered to.  So, it's important that this component is specified after the main body so that popups are rendered on top of everything else.  The properties to this component mostly deals with the animation.
+
+ - Properties:
+   - `modalTransitionName`: [default to 'modal'] used for css animation
+   - `modalTransitionEnterTimeout`: [default to 0] the modal enter animation duration in miliseconds
+   - `modalTransitionLeaveTimeout`: [default to 0] the modal leave animation duration in miliseconds
+   - `popupTransitionName`: [default to 'popup'] used for css animation
+   - `popupTransitionEnterTimeout`: [default to 0] the popup enter animation duration in miliseconds
+   - `popupTransitionLeaveTimeout`: [default to 0] the popup leave animation duration in miliseconds
+
 ### Actions
  - `openPopup(id, [options])`
     - `id`: id of the popup to open
@@ -35,6 +35,9 @@ This component is the component where the popups are rendered to.  So, it's impo
       - `top`: top offset
  - `closePopup(id)`
     - `id`: id of the popup to close
+ - `updateScrollPosition`
+    - `x`: scroll top
+    - `y`: scroll left
 
 ### Dependencies
  - react
@@ -145,3 +148,8 @@ To use, you must specify transition enter/leave timeout properties for `PopupSan
 .popup-leave.popup-leave-active {
 }
 ```
+
+### Scrolling
+
+If there's an actively open popup and the popup position should be affected by the scroll in the container, then you should dispatch `updateScrollPosition` on `onScroll` of the container with `scrollTop` and `scrollLeft` properties.
+See example in the example app - [app.jsx](https://github.com/ryank109/react-redux-popup/blob/master/example-app/app.jsx#L15)
