@@ -152,4 +152,4 @@ To use, you must specify transition enter/leave timeout properties for `PopupSan
 ### Scrolling
 
 If there's an actively open popup and the popup position should be affected by the scroll in the container, then you should dispatch `updateScrollPosition` on `onScroll` of the container with `scrollTop` and `scrollLeft` properties.
-See example in the example app - [app.jsx](https://github.com/ryank109/react-redux-popup/blob/master/example-app/app.jsx#L15)
+See example in the example app - [app.jsx](https://github.com/ryank109/react-redux-popup/blob/master/example-app/app/app.jsx#L15)
