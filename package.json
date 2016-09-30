@@ -5,7 +5,7 @@
   "main": "lib/react-redux-popup.js",
   "scripts": {
     "clean": "rimraf coverage lib test-reports",
-    "build": "webpack --config ./configs/webpack.config.js --progress --profile --colors",
+    "build": "NODE_ENV=production webpack --config ./configs/webpack.config.js --progress --profile --colors",
     "coverage": "./node_modules/jest/bin/jest.js --coverage",
     "lint": "eslint 'src/**' --cache",
     "prepublish": "npm run clean && npm run build",
