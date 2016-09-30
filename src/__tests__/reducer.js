@@ -1,4 +1,3 @@
-import expect from 'expect';
 import { closePopup, openPopup, updateScrollPosition } from 'rrp/actions';
 import reducer from 'rrp/reducer';
 

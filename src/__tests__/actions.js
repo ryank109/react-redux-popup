@@ -1,4 +1,3 @@
-import expect from 'expect';
 import * as Actions from 'rrp/actions';
 
 describe('actions', function() {
