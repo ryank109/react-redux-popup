@@ -1,59 +1,59 @@
 {
   "name": "react-redux-popup",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "React redux popup",
   "main": "lib/react-redux-popup.js",
   "scripts": {
     "clean": "rimraf lib test-reports",
     "build": "webpack --config ./configs/webpack.config.js --progress --profile --colors",
-    "coverage": "NODE_ENV=test karma start ./configs/karma.config.coverage.js",
+    "coverage": "./node_modules/jest/bin/jest.js --coverage",
     "lint": "eslint 'src/**' --cache",
     "prepublish": "npm run clean && npm run build",
-    "test": "NODE_ENV=test karma start ./configs/karma.config.js",
-    "test-dev": "NODE_ENV=test karma start ./configs/karma.config.js --no-single-run --browsers Chrome --reporters nyan"
+    "test": "./node_modules/jest/bin/jest.js",
+    "test-dev": "./node_modules/jest/bin/jest.js --watch"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "json"
+    ],
+    "moduleNameMapper": {
+      "^rrp": "<rootDir>/src"
+    },
+    "testRegex": "__tests__/.*.js$|__tests__/.*.jsx$"
   },
   "keywords": [],
   "author": "Ryan Kim",
   "devDependencies": {
-    "babel-core": "^6.9.1",
-    "babel-eslint": "^6.0.4",
-    "babel-loader": "^6.2.4",
+    "babel-core": "^6.16.0",
+    "babel-eslint": "^7.0.0",
+    "babel-jest": "^15.0.0",
+    "babel-loader": "^6.2.5",
     "babel-plugin-react-require": "^2.1.0",
-    "babel-plugin-transform-object-rest-spread": "^6.8.0",
+    "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "babel-plugin-transform-react-jsx": "^6.8.0",
-    "babel-preset-es2015": "^6.9.0",
-    "babel-preset-react": "^6.5.0",
-    "eslint": "^2.11.1",
-    "eslint-plugin-babel": "^3.2.0",
-    "eslint-plugin-react": "^5.1.1",
-    "expect": "^1.20.1",
-    "file-loader": "^0.8.5",
-    "isparta-loader": "^2.0.0",
-    "karma": "^0.13.22",
-    "karma-chrome-launcher": "^1.0.1",
-    "karma-coverage": "^1.0.0",
-    "karma-junit-reporter": "^1.0.0",
-    "karma-mocha": "^1.0.1",
-    "karma-nyan-reporter": "^0.2.4",
-    "karma-phantomjs-launcher": "^1.0.0",
-    "karma-sourcemap-loader": "^0.3.7",
-    "karma-webpack": "^1.7.0",
-    "mocha": "^2.5.3",
-    "phantomjs-prebuilt": "^2.1.7",
-    "react": "^15.1.0",
-    "react-addons-css-transition-group": "^15.1.0",
-    "react-addons-test-utils": "^15.1.0",
-    "react-dom": "^15.1.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "eslint": "^3.6.1",
+    "eslint-plugin-babel": "^3.3.0",
+    "eslint-plugin-react": "^6.3.0",
+    "file-loader": "^0.9.0",
+    "jest": "^15.1.1",
+    "react": "^15.3.2",
+    "react-addons-css-transition-group": "^15.3.2",
+    "react-addons-test-utils": "^15.3.2",
+    "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
-    "redux": "^3.5.2",
-    "rimraf": "^2.5.2",
-    "webpack": "^1.13.1"
+    "redux": "^3.6.0",
+    "rimraf": "^2.5.4",
+    "webpack": "^1.13.2"
   },
   "peerDependencies": {
-    "react": "^15.1.0",
-    "react-addons-css-transition-group": "^15.1.0",
-    "react-dom": "^15.1.0",
+    "react": "^15.0.0",
+    "react-addons-css-transition-group": "^15.0.0",
+    "react-dom": "^15.0.0",
     "react-redux": "^4.4.5",
-    "redux": "^3.5.2"
+    "redux": "^3.5.0"
   }
 }
