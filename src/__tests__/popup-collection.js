@@ -1,4 +1,3 @@
-import expect from 'expect';
 import collection, {
     TYPE_MODAL,
     TYPE_POPUP
@@ -49,7 +48,6 @@ describe('popup-collection', function() {
 
     it('should clear all', function() {
         const composedObj = {};
-        const props = { id: '1' }
         collection.push([ TYPE_POPUP, composedObj, { id: '1' } ]);
         collection.push([ TYPE_MODAL, composedObj, { id: '2' } ]);
         collection.push([ TYPE_POPUP, composedObj, { id: '3' } ]);
