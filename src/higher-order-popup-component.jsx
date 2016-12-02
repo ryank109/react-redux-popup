@@ -4,23 +4,25 @@ import { updatePopupProps, closePopup } from 'rrp/actions';
 import collection from 'rrp/popup-collection';
 
 const PROP_TYPES = {
-    id: PropTypes.string.isRequired
+    closePopup: PropTypes.func.isRequired,
+    id: PropTypes.string.isRequired,
+    updatePopupProps: PropTypes.func.isRequired
 };
 
 export default function(ComposedComponent, type) {
     class HigherOrderPopupComponent extends Component {
         componentWillMount() {
-            collection.push([ type, ComposedComponent, this.props ]);
-        }
-
-        componentWillUnmount() {
-            collection.remove(this.props.id);
-            this.props.closePopup(this.props.id);
+            collection.push([type, ComposedComponent, this.props]);
         }
 
         componentWillReceiveProps(nextProps) {
             collection.update(nextProps.id, nextProps);
             this.props.updatePopupProps(nextProps.id, nextProps);
+        }
+
+        componentWillUnmount() {
+            collection.remove(this.props.id);
+            this.props.closePopup(this.props.id);
         }
 
         render() {

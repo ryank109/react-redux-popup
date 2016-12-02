@@ -24,10 +24,10 @@ popupCollection.update = function(popupId, props) {
     if (index > -1) {
         popupCollection[index][2] = props;
     }
-}
+};
 
 popupCollection.clearAll = function() {
     popupCollection.splice(0, popupCollection.length);
-}
+};
 
 export default popupCollection;

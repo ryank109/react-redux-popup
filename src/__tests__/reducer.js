@@ -7,45 +7,45 @@ describe('reducer', function() {
         const action1 = openPopup('1', {});
         let nextState = reducer(state, action1);
         expect(nextState).toEqual({
-            '1': true,
+            1: true,
             '1_rect': {}
         });
 
         // try the same action with same popup id
         nextState = reducer(state, action1);
         expect(nextState).toEqual({
-            '1': true,
+            1: true,
             '1_rect': {}
         });
 
         const action2 = openPopup('2');
         nextState = reducer(nextState, action2);
         expect(nextState).toEqual({
-            '1': true,
+            1: true,
             '1_rect': {},
-            '2': true,
+            2: true,
             '2_rect': undefined
         });
     });
 
     it('should return close popup state with CLOSE_POPUP action', function() {
         const state = {
-            '1': true,
+            1: true,
             '1_rect': {},
-            '2': true,
+            2: true,
             '2_rect': undefined
         };
         const action1 = closePopup('1');
         let nextState = reducer(state, action1);
         expect(nextState).toEqual({
-            '2': true,
+            2: true,
             '2_rect': undefined
         });
 
         const action2 = closePopup('NotInState');
         nextState = reducer(nextState, action2);
         expect(nextState).toEqual({
-            '2': true,
+            2: true,
             '2_rect': undefined
         });
 

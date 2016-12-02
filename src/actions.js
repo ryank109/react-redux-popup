@@ -15,7 +15,7 @@ export function closePopup(popupId) {
     return {
         popupId,
         type: CLOSE_POPUP
-    }
+    };
 }
 
 export function updatePopupProps(popupId, props) {
