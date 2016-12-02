@@ -14,20 +14,24 @@ export default function(ComposedComponent) {
         constructor(props) {
             super(props);
             this.state = { style: {} };
+            this.setModalRef = el => {
+                this.modal = el;
+            };
         }
 
         componentDidMount() {
-            const modal = document.getElementsByClassName(`js-modal-${this.props.id}`)[0];
+            const { clientHeight, clientWidth } = this.modal;
+            // eslint-disable-next-line react/no-did-mount-set-state
             this.setState({
                 style: {
-                    left: (window.innerWidth - modal.clientWidth) / 2,
-                    top: (window.innerHeight - modal.clientHeight) / 2
+                    left: (window.innerWidth - clientWidth) / 2,
+                    top: (window.innerHeight - clientHeight) / 2
                 }
             });
         }
 
         render() {
-            const className = `js-modal-${this.props.id} ${this.props.popupClassName ? this.props.popupClassName : ''}`;
+            const className = `${this.props.popupClassName ? this.props.popupClassName : ''}`;
             const style = {
                 ...this.state.style,
                 ...this.props.style
@@ -36,7 +40,7 @@ export default function(ComposedComponent) {
             return (
                 <div id={this.props.id}>
                     <div className={this.props.layoverClassName} />
-                    <div className={className} style={style}>
+                    <div className={className} ref={this.setModalRef} style={style}>
                         <ComposedComponent {...this.props} />
                     </div>
                 </div>

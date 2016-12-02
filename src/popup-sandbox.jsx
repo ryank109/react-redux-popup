@@ -6,6 +6,13 @@ import collection, { TYPE_MODAL, TYPE_POPUP } from 'rrp/popup-collection';
 export const popupSelector = state => state.popup;
 
 class Sandbox extends Component {
+    renderPopups(popupType) {
+        return collection
+            .filter(popup => popup[0] === popupType && this.props[popup[2].id])
+            // eslint-disable-next-line no-unused-vars
+            .map(([type, Popup, props]) => <Popup key={props.id} {...props} />);
+    }
+
     render() {
         return (
             <div>
@@ -25,12 +32,6 @@ class Sandbox extends Component {
                 </ReactCSSTransitionGroup>
             </div>
         );
-    }
-
-    renderPopups(popupType) {
-        return collection
-            .filter(popup => popup[0] === popupType && this.props[popup[2].id])
-            .map(([ type, Popup, props ]) => <Popup key={props.id} {...props} />);
     }
 }
 

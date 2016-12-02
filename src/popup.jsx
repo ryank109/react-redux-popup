@@ -6,9 +6,11 @@ import { TYPE_POPUP } from 'rrp/popup-collection';
 import { popupSelector } from 'rrp/popup-sandbox';
 
 const PROP_TYPES = {
+    closePopup: PropTypes.func.isRequired,
     id: PropTypes.string.isRequired,
-    popupClassName: PropTypes.string,
-    style: PropTypes.object
+    offsetX: PropTypes.number,
+    offsetY: PropTypes.number,
+    popupClassName: PropTypes.string
 };
 
 export default function(ComposedComponent) {
@@ -17,6 +19,9 @@ export default function(ComposedComponent) {
             super(props);
             this.closePopup = () => {
                 props.closePopup(props.id);
+            };
+            this.setPopupRef = el => {
+                this.popup = el;
             };
         }
 
@@ -28,28 +33,33 @@ export default function(ComposedComponent) {
             window.removeEventListener('mouseup', this.closePopup);
         }
 
+        stopEvent(event) {
+            event.stopPropagation();
+        }
+
         render() {
-            const className = `js-popup-${this.props.id} ${this.props.popupClassName ? this.props.popupClassName : ''}`;
-            let style = null;
+            const className = this.props.popupClassName ? this.props.popupClassName : '';
+            let style;
             const rectId = `${this.props.id}_rect`;
             if (this.props[rectId]) {
+                const { offsetX, offsetY } = this.props;
                 style = {
                     ...this.props[rectId]
                 };
-                const { offsetX, offsetY } = this.props;
-                style.left -= (offsetX ? offsetX : 0);
-                style.top -= (offsetY ? offsetY : 0);
+                style.left -= (offsetX ? offsetX : 0); // eslint-disable-line no-unneeded-ternary
+                style.top -= (offsetY ? offsetY : 0); // eslint-disable-line no-unneeded-ternary
             }
 
             return (
-                <div className={className} onMouseUp={this.stopEvent} style={style}>
+                <div
+                    className={className}
+                    onMouseUp={this.stopEvent}
+                    ref={this.setPopupRef}
+                    style={style}
+                >
                     <ComposedComponent {...this.props} />
                 </div>
             );
-        }
-
-        stopEvent(event) {
-            event.stopPropagation();
         }
     }
 

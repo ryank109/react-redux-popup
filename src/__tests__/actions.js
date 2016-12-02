@@ -26,7 +26,7 @@ describe('actions', function() {
             props: { newProp: 'val1' },
             type: Actions.UPDATE_POPUP_PROPS
         });
-    })
+    });
 
     it('should return update scroll position action', function() {
         const x = 10;
@@ -36,5 +36,5 @@ describe('actions', function() {
             y,
             type: Actions.UPDATE_POPUP_SCROLL_POSITION
         });
-    })
+    });
 });

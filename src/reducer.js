@@ -13,7 +13,7 @@ const reducers = {
     }),
     [CLOSE_POPUP]: (state, action) => {
         const keys = Object.keys(state);
-        let newState = {};
+        const newState = {};
         keys.forEach(key => {
             if (key !== action.popupId
                 && key !== `${action.popupId}_rect`
@@ -27,13 +27,11 @@ const reducers = {
         ...state,
         [`${action.popupId}_props`]: action.props
     }),
-    [UPDATE_POPUP_SCROLL_POSITION]: (state, action) => {
-        return {
-            ...state,
-            offsetX: action.x,
-            offsetY: action.y
-        };
-    }
+    [UPDATE_POPUP_SCROLL_POSITION]: (state, action) => ({
+        ...state,
+        offsetX: action.x,
+        offsetY: action.y
+    })
 };
 
 export default function popup(state = {}, action) {
