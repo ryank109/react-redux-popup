@@ -16,7 +16,7 @@ This is set of higher order components that enable popup behavior using react an
      - `popupClassName` - the popup class name
      - `style` - optional styles
 
-### PopupSandbox Component
+### Portal Component
 This component is the component where the popups are rendered to.  So, it's important that this component is specified after the main body so that popups are rendered on top of everything else.  The properties to this component mostly deals with the animation.
 
  - Properties:
@@ -49,16 +49,16 @@ This component is the component where the popups are rendered to.  So, it's impo
 ### Usage
 
 #### Hook to the Application
-When you want the contents of the popup to the store, or if we need to popup another popup within a popup, the store context is needed. `PopupSandbox` is the way to include the store context without having to pass in the store to the components. Include the `PopupSandbox` within the `Provider`. It doesn't matter where you define it, it just needs to be after the main app component to show the popups on top of the app.
+When you want the contents of the popup to the store, or if we need to popup another popup within a popup, the store context is needed. `Portal` is the way to include the store context without having to pass in the store to the components. Include the `Portal` within the `Provider`. It doesn't matter where you define it, it just needs to be after the main app component to show the popups on top of the app.
 
 ```javascript
-import { PopupSandbox } from 'react-redux-popup';
+import { Portal } from 'react-redux-popup';
 
 render(
     <Provider store={store}>
         <div>
             <App />
-            <PopupSandbox />
+            <Portal />
         </div>
     </Provider>
 , document.body);
@@ -119,7 +119,7 @@ export default connect(null, popupActions)(App);
 ### Animation
 
 Animation support has been added with [ReactCSSTransitionGroup](https://facebook.github.io/react/docs/animation.html).
-To use, you must specify transition enter/leave timeout properties for `PopupSandbox` and define css to handle the animation and define the following styles:
+To use, you must specify transition enter/leave timeout properties for `Portal` and define css to handle the animation and define the following styles:
 
 ```css
 .modal-enter .modal-container {
