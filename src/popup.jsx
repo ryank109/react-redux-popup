@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as popupActions from 'rrp/actions';
 import HigherOrderPopupComponent from 'rrp/higher-order-popup-component';
 import { TYPE_POPUP } from 'rrp/popup-collection';
-import { popupSelector } from 'rrp/popup-sandbox';
+import { popupSelector } from 'rrp/portal';
 
 const PROP_TYPES = {
     closePopup: PropTypes.func.isRequired,

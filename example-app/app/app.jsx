@@ -4,7 +4,7 @@ import { popupActions } from 'react-redux-popup';
 import { bindActionCreators } from 'redux';
 import Menus from 'app/menus';
 import ModalPopup from 'app/components/modal-popup';
-import { PopupSandbox } from 'react-redux-popup';
+import { Portal } from 'react-redux-popup';
 
 class App extends Component {
     render() {
@@ -19,7 +19,7 @@ class App extends Component {
                     <Menus />
                 </div>
                 <ModalPopup id="modal1" popupClassName="modal-container" layoverClassName="modal-layover" closePopup={actions.closePopup}/>
-                <PopupSandbox
+                <Portal
                     modalTransitionEnterTimeout={300}
                     modalTransitionLeaveTimeout={300}
                     popupTransitionEnterTimeout={100}

@@ -1,7 +1,7 @@
 .DS_Store
 .eslintcache
 coverage
+lib
 node_modules
 npm-debug.log
-example-app/example_run
 test-reports

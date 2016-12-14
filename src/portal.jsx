@@ -5,7 +5,7 @@ import collection, { TYPE_MODAL, TYPE_POPUP } from 'rrp/popup-collection';
 
 export const popupSelector = state => state.popup;
 
-class Sandbox extends Component {
+class Portal extends Component {
     renderPopups(popupType) {
         return collection
             .filter(popup => popup[0] === popupType && this.props[popup[2].id])
@@ -35,7 +35,7 @@ class Sandbox extends Component {
     }
 }
 
-Sandbox.propTypes = {
+Portal.propTypes = {
     modalTransitionName: PropTypes.string.isRequired,
     modalTransitionEnterTimeout: PropTypes.number.isRequired,
     modalTransitionLeaveTimeout: PropTypes.number.isRequired,
@@ -44,7 +44,7 @@ Sandbox.propTypes = {
     popupTransitionLeaveTimeout: PropTypes.number.isRequired
 };
 
-Sandbox.defaultProps = {
+Portal.defaultProps = {
     modalTransitionName: 'modal',
     modalTransitionEnterTimeout: 0,
     modalTransitionLeaveTimeout: 0,
@@ -53,4 +53,4 @@ Sandbox.defaultProps = {
     popupTransitionLeaveTimeout: 0
 };
 
-export default connect(popupSelector)(Sandbox);
+export default connect(popupSelector)(Portal);
