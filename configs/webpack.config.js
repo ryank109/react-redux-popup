@@ -54,12 +54,11 @@ module.exports = {
     alias: {
       rrp: path.resolve(__dirname, '../src')
     },
-    root: path.join(__dirname, ''),
-    modulesDirectories: [
+    extensions: ['.js', '.jsx'],
+    modules: [
       path.resolve(__dirname, '../node_modules'),
       path.resolve(__dirname, '../src')
-    ],
-    extensions: ['', '.js', '.jsx']
+    ]
   },
 
   plugins: [
@@ -69,8 +68,6 @@ module.exports = {
       __PRODUCTION__: env.production,
       __CURRENT_ENV__: '\'' + (NODE_ENV) + '\''
     }),
-    new webpack.optimize.OccurenceOrderPlugin(true),
-    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
       output: {
         comments: false
@@ -84,15 +81,18 @@ module.exports = {
       'process.env': {
         NODE_ENV: JSON.stringify('production')
       }
+    }),
+    new webpack.ProvidePlugin({
+      'React': 'react'
     })
   ],
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$|\.jsx$/,
         include: path.join(__dirname, '../src'),
-        loader: 'babel'
+        use: 'babel-loader'
       }
     ]
   }
