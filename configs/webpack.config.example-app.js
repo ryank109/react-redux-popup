@@ -17,12 +17,12 @@ Object.assign(env, {
 
 var VENDOR_DEPENDENCIES = [
   'classnames',
+  'prop-types',
   'react',
-  'react-dom',
-  'react-router'
+  'react-dom'
 ];
 
-var appCss = new ExtractTextPlugin('example-app.css');
+var appCss = new ExtractTextPlugin({ filename: 'example-app.css' });
 var appStylePath = path.join(__dirname, '../example-app/styles');
 
 module.exports = {
@@ -46,13 +46,12 @@ module.exports = {
       'react-redux-popup': path.resolve(__dirname, '../src'),
       'rrp': path.resolve(__dirname, '../src')
     },
-    root: path.join(__dirname, ''),
-    modulesDirectories: [
+    extensions: ['.js', '.jsx'],
+    modules: [
       path.resolve(__dirname, '../node_modules'),
       path.resolve(__dirname, '../src'),
       path.resolve(__dirname, '../example-app')
-    ],
-    extensions: ['', '.js', '.jsx']
+    ]
   },
 
   plugins: [
@@ -62,57 +61,73 @@ module.exports = {
       __PRODUCTION__: env.production,
       __CURRENT_ENV__: '\'' + (NODE_ENV) + '\''
     }),
-
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      options: {
+        postcss: [
+          autoprefixer({
+            browsers: ['last 2 version', 'ie >= 9']
+          })
+        ]
+      }
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      filename: 'vendor.js'
+    }),
+    new webpack.EvalSourceMapDevToolPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('development')
       }
     }),
+    new webpack.ProvidePlugin({
+      'React': 'react'
+    }),
     appCss
   ],
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$|\.jsx$/,
-        include: [ path.join(__dirname, '../src'), path.join(__dirname, '../example-app') ],
-        loader: 'babel'
+        include: [ path.join(__dirname, '../src'), path.join(__dirname, '../example-app/app') ],
+        use: 'babel-loader'
       },
       {
         test: /\.scss$/,
         include: appStylePath,
-        loader: appCss.extract(['css-loader', 'postcss-loader', 'sass-loader'])
+        use: appCss.extract({
+          use: ['css-loader', 'postcss-loader', 'sass-loader']
+        })
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         include: appStylePath,
-        loader: 'file-loader?mimetype=image/svg+xml&name=fonts/[name].[ext]'
+        use: 'file-loader?mimetype=image/svg+xml&name=fonts/[name].[ext]'
       },
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
         include: appStylePath,
-        loader: "file-loader?mimetype=application/font-woff&name=fonts/[name].[ext]"
+        use: "file-loader?mimetype=application/font-woff&name=fonts/[name].[ext]"
       },
       {
         test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
         include: appStylePath,
-        loader: "file-loader?mimetype=application/font-woff&name=fonts/[name].[ext]"
+        use: "file-loader?mimetype=application/font-woff&name=fonts/[name].[ext]"
       },
       {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
         include: appStylePath,
-        loader: "file-loader?mimetype=application/octet-stream&name=fonts/[name].[ext]"
+        use: "file-loader?mimetype=application/octet-stream&name=fonts/[name].[ext]"
       },
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
         include: appStylePath,
-        loader: "file-loader&name=fonts/[name].[ext]"
+        use: "file-loader&name=fonts/[name].[ext]"
       }
     ],
-  },
-
-  postcss: [ autoprefixer({ browsers: ['last 2 versions', 'ie >= 9'] }) ]
+  }
 };

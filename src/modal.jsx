@@ -1,4 +1,5 @@
-import { Component, PropTypes } from 'react';
+import { Component } from 'react';
+import PropTypes from 'prop-types';
 import HigherOrderPopupComponent from 'rrp/higher-order-popup-component';
 import { TYPE_MODAL } from 'rrp/popup-collection';
 
