@@ -17,6 +17,7 @@ Object.assign(env, {
 
 var VENDOR_DEPENDENCIES = [
   'classnames',
+  'prop-types',
   'react',
   'react-dom'
 ];

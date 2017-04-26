@@ -25,6 +25,7 @@
     'react/jsx-indent-props': [2, 4],
     'react/prefer-stateless-function': 1,
     'react/react-in-jsx-scope': 0,
+    'react/require-default-props': 0,
     'react/sort-comp': 1,
     'space-before-function-paren': 0
   }
