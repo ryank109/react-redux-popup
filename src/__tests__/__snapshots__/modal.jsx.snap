@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`modal should render the component 1`] = `
+<div
+  id="testPopup"
+>
+  <div />
+  <div
+    className=""
+    style={Object {}}
+  >
+    <ComposedComponent
+      closePopup={[Function]}
+      id="testPopup"
+      prop1="prop1_value"
+      updatePopupProps={[Function]}
+    />
+  </div>
+</div>
+`;
+
+exports[`modal should render the component with layover classname 1`] = `
+<div
+  id="testPopup"
+>
+  <div
+    className="my-class"
+  />
+  <div
+    className=""
+    style={Object {}}
+  >
+    <ComposedComponent
+      closePopup={[Function]}
+      id="testPopup"
+      layoverClassName="my-class"
+      prop1="prop1_value"
+      updatePopupProps={[Function]}
+    />
+  </div>
+</div>
+`;
+
+exports[`modal should render the component with popup classname 1`] = `
+<div
+  id="testPopup"
+>
+  <div />
+  <div
+    className="my-class"
+    style={Object {}}
+  >
+    <ComposedComponent
+      closePopup={[Function]}
+      id="testPopup"
+      popupClassName="my-class"
+      prop1="prop1_value"
+      updatePopupProps={[Function]}
+    />
+  </div>
+</div>
+`;
+
+exports[`modal should render the component with popup classname 2`] = `
+<div
+  id="testPopup"
+>
+  <div />
+  <div
+    className="my-class"
+    style={Object {}}
+  >
+    <ComposedComponent
+      closePopup={[Function]}
+      id="testPopup"
+      popupClassName="my-class"
+      prop1="prop1_value"
+      updatePopupProps={[Function]}
+    />
+  </div>
+</div>
+`;
+
+exports[`modal should render the component with provider 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <Connect(PopupComponent)
+    closePopup={[Function]}
+    id="testPopup"
+    prop1="prop1_value"
+    updatePopupProps={[Function]}
+  >
+    <PopupComponent
+      closePopup={[Function]}
+      id="testPopup"
+      prop1="prop1_value"
+      updatePopupProps={[Function]}
+    />
+  </Connect(PopupComponent)>
+</Provider>
+`;

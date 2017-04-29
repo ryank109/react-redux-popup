@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`popup should render the component 1`] = `
+<div
+  onMouseUp={[Function]}
+>
+  <ComposedComponent
+    closePopup={[Function]}
+    getRect={[Function]}
+    id="testPopup"
+    prop1="prop1_value"
+    updatePopupProps={[Function]}
+    xOffset={0}
+    yOffset={0}
+  />
+</div>
+`;
+
+exports[`popup should render the component with offsets 1`] = `
+<div
+  onMouseUp={[Function]}
+>
+  <ComposedComponent
+    closePopup={[Function]}
+    getRect={[Function]}
+    id="testPopup"
+    prop1="prop1_value"
+    updatePopupProps={[Function]}
+    xOffset={5}
+    yOffset={10}
+  />
+</div>
+`;
+
+exports[`popup should render the component with popup classname 1`] = `
+<div
+  className="my-class"
+  onMouseUp={[Function]}
+>
+  <ComposedComponent
+    closePopup={[Function]}
+    getRect={[Function]}
+    id="testPopup"
+    popupClassName="my-class"
+    prop1="prop1_value"
+    updatePopupProps={[Function]}
+    xOffset={0}
+    yOffset={0}
+  />
+</div>
+`;
+
+exports[`popup should render the component with provider 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <Connect(PopupComponent)
+    closePopup={[Function]}
+    getRect={[Function]}
+    id="testPopup"
+    prop1="prop1_value"
+    updatePopupProps={[Function]}
+  >
+    <PopupComponent
+      closePopup={[Function]}
+      getRect={[Function]}
+      id="testPopup"
+      prop1="prop1_value"
+      updatePopupProps={[Function]}
+    />
+  </Connect(PopupComponent)>
+</Provider>
+`;

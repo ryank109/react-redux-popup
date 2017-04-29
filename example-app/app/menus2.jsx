@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { popupActions } from 'react-redux-popup';
+import { openPopup } from 'react-redux-popup';
 import PopupMenu from 'app/components/popup-menu';
 
 const menu1 = [
@@ -26,23 +26,55 @@ class Menus extends Component {
     render() {
         return (
             <div className="menu">
-                <div className="menu-item" onClick={this.onClickHandler('11')}>Playas</div>
-                <div className="menu-item" onClick={this.onClickHandler('12')}>Colors</div>
-                <div className="menu-item" onClick={this.onClickHandler('13')}>Numbers</div>
-                <PopupMenu id="11" popupClassName="popup-menu" menuItems={menu1} containerElementId="mainContainer" />
-                <PopupMenu id="12" popupClassName="popup-menu" menuItems={menu2} containerElementId="mainContainer" />
-                <PopupMenu id="13" popupClassName="popup-menu" menuItems={menu3} containerElementId="mainContainer" />
+                <div
+                    className="menu-item"
+                    onClick={this.onClickHandler('11')}
+                    ref={e => { this.menu1 = e; }}
+                >
+                    Playas
+                </div>
+                <div
+                    className="menu-item"
+                    onClick={this.onClickHandler('12')}
+                    ref={e => { this.menu2 = e; }}
+                >
+                    Colors
+                </div>
+                <div
+                    className="menu-item"
+                    onClick={this.onClickHandler('13')}
+                    ref={e => { this.menu3 = e; }}
+                >
+                    Numbers
+                </div>
+                <PopupMenu
+                    containerElementId="mainContainer"
+                    getRect={() => this.menu1.getBoundingClientRect()}
+                    id="11"
+                    menuItems={menu1}
+                    popupClassName="popup-menu"
+                />
+                <PopupMenu
+                    containerElementId="mainContainer"
+                    getRect={() => this.menu2.getBoundingClientRect()}
+                    id="12"
+                    menuItems={menu2}
+                    popupClassName="popup-menu"
+                />
+                <PopupMenu
+                    containerElementId="mainContainer"
+                    getRect={() => this.menu3.getBoundingClientRect()}
+                    id="13"
+                    menuItems={menu3}
+                    popupClassName="popup-menu"
+                />
             </div>
         );
     }
 
     onClickHandler(id) {
-        return event => {
-            const rect = event.target.getBoundingClientRect();
-            this.props.openPopup(id, { top: rect.bottom, left: rect.left });
-
-        };
+        return () => this.props.openPopup(id);
     }
 }
 
-export default connect(null, popupActions)(Menus);
+export default connect(null, { openPopup })(Menus);

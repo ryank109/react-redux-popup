@@ -12,22 +12,26 @@ function indexOf(collection, popupId) {
     return -1;
 }
 
-popupCollection.remove = function(popupId) {
+export function add(type, component, props) {
+    popupCollection.push([type, component, props]);
+}
+
+export function remove(popupId) {
     const index = indexOf(popupCollection, popupId);
     if (index > -1) {
         popupCollection.splice(index, 1);
     }
-};
+}
 
-popupCollection.update = function(popupId, props) {
+export function update(popupId, props) {
     const index = indexOf(popupCollection, popupId);
     if (index > -1) {
         popupCollection[index][2] = props;
     }
-};
+}
 
-popupCollection.clearAll = function() {
+export function clearAll() {
     popupCollection.splice(0, popupCollection.length);
-};
+}
 
 export default popupCollection;

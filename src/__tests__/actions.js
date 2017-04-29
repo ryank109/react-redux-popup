@@ -19,22 +19,18 @@ describe('actions', function() {
         });
     });
 
+    it('should return refresh popup action', function() {
+        expect(Actions.refreshPopupPosition()).toEqual({
+            type: Actions.REFRESH_POPUP_POSITION
+        });
+    });
+
     it('should return update popup action', function() {
         const popupId = 'popupId1';
         expect(Actions.updatePopupProps(popupId, { newProp: 'val1' })).toEqual({
             popupId,
             props: { newProp: 'val1' },
             type: Actions.UPDATE_POPUP_PROPS
-        });
-    });
-
-    it('should return update scroll position action', function() {
-        const x = 10;
-        const y = 11;
-        expect(Actions.updateScrollPosition(x, y)).toEqual({
-            x,
-            y,
-            type: Actions.UPDATE_POPUP_SCROLL_POSITION
         });
     });
 });
