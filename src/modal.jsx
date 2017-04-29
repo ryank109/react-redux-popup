@@ -10,19 +10,26 @@ const PROP_TYPES = {
     style: PropTypes.object
 };
 
-export default function(ComposedComponent) {
+export const HOCModal = ComposedComponent => {
     class Modal extends Component {
         constructor(props) {
             super(props);
+            this.resizeHandler =
+                () => window.requestAnimationFrame(() => this.updatePosition());
             this.state = { style: {} };
-            this.setModalRef = el => {
-                this.modal = el;
-            };
         }
 
         componentDidMount() {
+            this.updatePosition();
+            window.addEventListener('resize', this.resizeHandler);
+        }
+
+        componentWillUnmount() {
+            window.removeEventListener('resize', this.resizeHandler);
+        }
+
+        updatePosition() {
             const { clientHeight, clientWidth } = this.modal;
-            // eslint-disable-next-line react/no-did-mount-set-state
             this.setState({
                 style: {
                     left: (window.innerWidth - clientWidth) / 2,
@@ -41,7 +48,7 @@ export default function(ComposedComponent) {
             return (
                 <div id={this.props.id}>
                     <div className={this.props.layoverClassName} />
-                    <div className={className} ref={this.setModalRef} style={style}>
+                    <div className={className} ref={e => { this.modal = e; }} style={style}>
                         <ComposedComponent {...this.props} />
                     </div>
                 </div>
@@ -50,6 +57,8 @@ export default function(ComposedComponent) {
     }
 
     Modal.propTypes = PROP_TYPES;
+    return Modal;
+};
 
-    return HigherOrderPopupComponent(Modal, TYPE_MODAL);
-}
+export default ComposedComponent => HigherOrderPopupComponent(
+    HOCModal(ComposedComponent), TYPE_MODAL);

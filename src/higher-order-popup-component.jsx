@@ -2,27 +2,21 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { updatePopupProps, closePopup } from 'rrp/actions';
-import collection from 'rrp/popup-collection';
+import { add, remove, update } from 'rrp/popup-collection';
 
-const PROP_TYPES = {
-    closePopup: PropTypes.func.isRequired,
-    id: PropTypes.string.isRequired,
-    updatePopupProps: PropTypes.func.isRequired
-};
-
-export default function(ComposedComponent, type) {
-    class HigherOrderPopupComponent extends Component {
+export const HigherOrderPopupComponent = (ComposedComponent, type) => {
+    class PopupComponent extends Component {
         componentWillMount() {
-            collection.push([type, ComposedComponent, this.props]);
+            add(type, ComposedComponent, this.props);
         }
 
         componentWillReceiveProps(nextProps) {
-            collection.update(nextProps.id, nextProps);
+            update(nextProps.id, nextProps);
             this.props.updatePopupProps(nextProps.id, nextProps);
         }
 
         componentWillUnmount() {
-            collection.remove(this.props.id);
+            remove(this.props.id);
             this.props.closePopup(this.props.id);
         }
 
@@ -31,6 +25,16 @@ export default function(ComposedComponent, type) {
         }
     }
 
-    HigherOrderPopupComponent.propTypes = PROP_TYPES;
-    return connect(null, { updatePopupProps, closePopup })(HigherOrderPopupComponent);
-}
+    PopupComponent.propTypes = {
+        closePopup: PropTypes.func.isRequired,
+        id: PropTypes.string.isRequired,
+        updatePopupProps: PropTypes.func.isRequired
+    };
+
+    return PopupComponent;
+};
+
+export default (ComposedComponent, type) => connect(
+    null,
+    { updatePopupProps, closePopup }
+)(HigherOrderPopupComponent(ComposedComponent, type));

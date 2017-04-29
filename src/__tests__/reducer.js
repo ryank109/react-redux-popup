@@ -1,4 +1,4 @@
-import { closePopup, openPopup, updateScrollPosition } from 'rrp/actions';
+import { closePopup, openPopup, refreshPopupPosition, updatePopupProps } from 'rrp/actions';
 import reducer from 'rrp/reducer';
 
 describe('reducer', function() {
@@ -28,6 +28,26 @@ describe('reducer', function() {
         });
     });
 
+    it('should refresh popup position', function() {
+        const state = {};
+        const action = refreshPopupPosition();
+        const nextState = reducer(state, action);
+        expect(nextState).toEqual({
+            refreshPosition: true
+        });
+    });
+
+    it('should refresh popup position with refreshPosition state', function() {
+        const state = {
+            refreshPosition: true
+        };
+        const action = refreshPopupPosition();
+        const nextState = reducer(state, action);
+        expect(nextState).toEqual({
+            refreshPosition: false
+        });
+    });
+
     it('should return close popup state with CLOSE_POPUP action', function() {
         const state = {
             1: true,
@@ -54,20 +74,27 @@ describe('reducer', function() {
         expect(nextState).toEqual({});
     });
 
-    it('should update scroll position', function() {
+    it('should update popup properties', function() {
         const state = {};
-        const action1 = updateScrollPosition(10, 12);
-        let nextState = reducer(state, action1);
+        const action = updatePopupProps('1', { a: '1', b: '2' });
+        const nextState = reducer(state, action);
         expect(nextState).toEqual({
-            offsetX: 10,
-            offsetY: 12
+            '1_props': { a: '1', b: '2' }
         });
+    });
 
-        const action2 = updateScrollPosition(13, 15);
-        nextState = reducer(nextState, action2);
+    it('should update popup properties with existing props', function() {
+        const state = {
+            '1_props': { something: 'a' }
+        };
+        const action = updatePopupProps('1', { a: '1', b: '2' });
+        const nextState = reducer(state, action);
         expect(nextState).toEqual({
-            offsetX: 13,
-            offsetY: 15
+            '1_props': { a: '1', b: '2' }
         });
+    });
+
+    it('should return the empty state', function() {
+        expect(reducer(undefined, { type: 'unknown_action' })).toEqual({});
     });
 });

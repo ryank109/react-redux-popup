@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { popupActions } from 'react-redux-popup';
+import { openPopup } from 'react-redux-popup';
 import PopupMenu from 'app/components/popup-menu';
 
 const menu1 = [
@@ -37,15 +37,16 @@ class Menus extends Component {
         this.state = {
             menus: [ menu1, menu2, menu3, menu4 ]
         };
+        this.menu = {};
     }
 
     render() {
         return (
             <div className="menu">
-                <div className="menu-item" onClick={this.onClickHandler('0')}>Playas</div>
-                <div className="menu-item" onClick={this.onClickHandler('1')}>Colors</div>
-                <div className="menu-item" onClick={this.onClickHandler('2')}>Numbers</div>
-                <div className="menu-item" onClick={this.onClickHandler('3')}>Rainbow</div>
+                <div className="menu-item" onClick={this.onClickHandler('0')} ref={e => { this.menu[0] = e; }}>Playas</div>
+                <div className="menu-item" onClick={this.onClickHandler('1')} ref={e => { this.menu[1] = e; }}>Colors</div>
+                <div className="menu-item" onClick={this.onClickHandler('2')} ref={e => { this.menu[2] = e; }}>Numbers</div>
+                <div className="menu-item" onClick={this.onClickHandler('3')} ref={e => { this.menu[3] = e; }}>Rainbow</div>
                 <button onClick={this.changeMenu.bind(this)}>Change Menu</button>
                 {this.renderMenus()}
             </div>
@@ -54,7 +55,19 @@ class Menus extends Component {
 
     renderMenus() {
         return this.state.menus.map(
-            (menu, index) => <PopupMenu key={index} id={`${index}`} popupClassName="popup-menu" menuItems={menu} onClick={() => true}/>);
+            (menu, index) => (
+                <PopupMenu
+                    getRect={() => this.menu[index].getBoundingClientRect()}
+                    id={`${index}`}
+                    key={index}
+                    menuItems={menu}
+                    onClick={() => true}
+                    popupClassName="popup-menu"
+                    xOffset={10}
+                    yOffset={5}
+                />
+            )
+        );
     }
 
     changeMenu() {
@@ -65,11 +78,9 @@ class Menus extends Component {
 
     onClickHandler(id) {
         return event => {
-            const top = event.target.offsetTop + event.target.offsetHeight;
-            const left = event.target.offsetLeft;
-            this.props.openPopup(id, { top, left });
+            this.props.openPopup(id);
         };
     }
 }
 
-export default connect(null, popupActions)(Menus);
+export default connect(null, { openPopup })(Menus);

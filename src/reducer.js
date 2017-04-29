@@ -1,8 +1,8 @@
 import {
-    OPEN_POPUP,
     CLOSE_POPUP,
-    UPDATE_POPUP_PROPS,
-    UPDATE_POPUP_SCROLL_POSITION
+    OPEN_POPUP,
+    REFRESH_POPUP_POSITION,
+    UPDATE_POPUP_PROPS
 } from 'rrp/actions';
 
 const reducers = {
@@ -23,14 +23,13 @@ const reducers = {
         });
         return newState;
     },
+    [REFRESH_POPUP_POSITION]: state => ({
+        ...state,
+        refreshPosition: !state.refreshPosition
+    }),
     [UPDATE_POPUP_PROPS]: (state, action) => ({
         ...state,
         [`${action.popupId}_props`]: action.props
-    }),
-    [UPDATE_POPUP_SCROLL_POSITION]: (state, action) => ({
-        ...state,
-        offsetX: action.x,
-        offsetY: action.y
     })
 };
 

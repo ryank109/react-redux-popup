@@ -8,13 +8,16 @@ This is set of higher order components that enable popup behavior using react an
      - `id` - required id
      - `popupClassName` - the modal class name
      - `layoverClassName` - the layover class name
-     - `style` - optional styles
+     - `style` - optional styles to apply on the modal
 
  - **Popup** - creates a popup on the location specified in `options` argument on `openPopup`.  Clicking outside of the popup should close this popup or with dispatching `closePopup` action.
    - Properties:
+     - `getRect` - the required function to describe the position that the popup should appear. The return of the function should be same as `element.getBoundingClientRect()` object or use that for simplicity. i.e. `getRect={() => element.getBoundingClientRect()}`
      - `id` - required id
      - `popupClassName` - the popup class name
-     - `style` - optional styles
+     - `style` - optional styles to apply on the popup
+     - `xOffset` - the left/right offset where the popup should appear
+     - `yOffset` - the top/bottom offset where the popup should appear
 
 ### Portal Component
 This component is the component where the popups are rendered to.  So, it's important that this component is specified after the main body so that popups are rendered on top of everything else.  The properties to this component mostly deals with the animation.
@@ -28,23 +31,12 @@ This component is the component where the popups are rendered to.  So, it's impo
    - `popupTransitionLeaveTimeout`: [default to 0] the popup leave animation duration in miliseconds
 
 ### Actions
- - `openPopup(id, [options])`
+ - `openPopup(id)`
     - `id`: id of the popup to open
-    - `options`:
-      - `left`: left offset
-      - `top`: top offset
  - `closePopup(id)`
     - `id`: id of the popup to close
- - `updateScrollPosition`
-    - `x`: scroll top
-    - `y`: scroll left
-
-### Dependencies
- - react
- - react-addons-css-transition-group
- - react-dom
- - react-redux
- - redux
+ - `refreshPopupPosition()`
+    - Refresh popup position, such as on scroll. The refreshing is throttled, so that you don't have to throttle in your call.
 
 ### Usage
 
@@ -94,26 +86,25 @@ export default Popup(PopupMenu);
 app.js
 ```javascript
 import { connect } from 'react-redux';
-import { popupActions } from 'react-redux-popup';
+import { openPopup } from 'react-redux-popup';
 import PopupMenu from './popup-menu';
 
 class App extends Component {
     render() {
         return (
             <div>
-                <button refs="button" onClick={this.openMenu.bind(this)} />
-                <PopupMenu id="popup1" popupClassName="popup" />
+                <button refs={e => { this.elem = e; }} onClick={() => this.props.openPopup('popup1'))} />
+                <PopupMenu
+                    getRect={() => this.elem.getBoundingClientRect()}
+                    id="popup1"
+                    popupClassName="popup"
+                />
             </div>
         );
     }
-
-    openMenu() {
-        const rect = this.refs.button.getBoundingClientRect();
-        this.props.openPopup('popup1', { top: rect.bottom, left: rect.left });
-    }
 }
 
-export default connect(null, popupActions)(App);
+export default connect(null, { openPopup })(App);
 ```
 
 ### Animation
@@ -151,5 +142,4 @@ To use, you must specify transition enter/leave timeout properties for `Portal` 
 
 ### Scrolling
 
-If there's an actively open popup and the popup position should be affected by the scroll in the container, then you should dispatch `updateScrollPosition` on `onScroll` of the container with `scrollTop` and `scrollLeft` properties.
-See example in the example app - [app.jsx](https://github.com/ryank109/react-redux-popup/blob/master/example-app/app/app.jsx#L15)
+Scrolling event isn't something that can't be watched from global document, so the solution is to call `refreshPopupPosition` action. After all, there should be only one `Popup` open in most of the cases, and even if it's not, it'll update the position of the popup based on the `getRect` function. `Modal` doesn't get repositioned from this action.
