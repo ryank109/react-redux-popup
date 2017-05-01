@@ -57,7 +57,6 @@ class Menus extends Component {
         return this.state.menus.map(
             (menu, index) => (
                 <PopupMenu
-                    anchor="top"
                     getRect={() => this.menu[index].getBoundingClientRect()}
                     id={`${index}`}
                     key={index}
