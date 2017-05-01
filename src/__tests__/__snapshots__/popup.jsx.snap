@@ -5,13 +5,13 @@ exports[`popup should render the component 1`] = `
   onMouseUp={[Function]}
 >
   <ComposedComponent
+    anchor="bottom"
     closePopup={[Function]}
     getRect={[Function]}
     id="testPopup"
+    offset={0}
     prop1="prop1_value"
     updatePopupProps={[Function]}
-    xOffset={0}
-    yOffset={0}
   />
 </div>
 `;
@@ -21,13 +21,13 @@ exports[`popup should render the component with offsets 1`] = `
   onMouseUp={[Function]}
 >
   <ComposedComponent
+    anchor="bottom"
     closePopup={[Function]}
     getRect={[Function]}
     id="testPopup"
+    offset={5}
     prop1="prop1_value"
     updatePopupProps={[Function]}
-    xOffset={5}
-    yOffset={10}
   />
 </div>
 `;
@@ -38,14 +38,14 @@ exports[`popup should render the component with popup classname 1`] = `
   onMouseUp={[Function]}
 >
   <ComposedComponent
+    anchor="bottom"
     closePopup={[Function]}
     getRect={[Function]}
     id="testPopup"
+    offset={0}
     popupClassName="my-class"
     prop1="prop1_value"
     updatePopupProps={[Function]}
-    xOffset={0}
-    yOffset={0}
   />
 </div>
 `;

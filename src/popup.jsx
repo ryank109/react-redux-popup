@@ -5,15 +5,16 @@ import { closePopup } from 'rrp/actions';
 import HigherOrderPopupComponent from 'rrp/higher-order-popup-component';
 import { TYPE_POPUP } from 'rrp/popup-collection';
 import { popupSelector } from 'rrp/portal';
+import { getPopupPosition } from 'rrp/utils';
 
 const PROP_TYPES = {
+    anchor: PropTypes.oneOf(['bottom', 'left', 'right', 'top']),
     closePopup: PropTypes.func.isRequired,
     getRect: PropTypes.func.isRequired,
     id: PropTypes.string.isRequired,
     popupClassName: PropTypes.string,
     refreshPosition: PropTypes.bool,
-    xOffset: PropTypes.number.isRequired,
-    yOffset: PropTypes.number.isRequired
+    offset: PropTypes.number.isRequired
 };
 
 export const HOCPopup = ComposedComponent => {
@@ -46,11 +47,14 @@ export const HOCPopup = ComposedComponent => {
         }
 
         setPopupPosition() {
-            const { bottom, left } = this.props.getRect();
-            const style = {
-                left: left + this.props.xOffset,
-                top: bottom + this.props.yOffset
-            };
+            const style = getPopupPosition(
+                this.props.anchor,
+                this.props.getRect(),
+                this.popup.clientWidth,
+                this.popup.clientHeight,
+                window.innerWidth,
+                window.innerHeight,
+                this.props.offset);
             this.setState({ style });
         }
 
@@ -77,8 +81,8 @@ export const HOCPopup = ComposedComponent => {
     }
 
     Popup.defaultProps = {
-        xOffset: 0,
-        yOffset: 0
+        anchor: 'bottom',
+        offset: 0
     };
 
     Popup.propTypes = PROP_TYPES;

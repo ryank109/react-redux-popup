@@ -29,6 +29,7 @@ html, body {
 
 .popup-menu-item {
     cursor: pointer;
+    white-space: nowrap;
     padding: 5px 20px;
 
     &:hover {

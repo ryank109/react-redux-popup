@@ -85,8 +85,7 @@ describe('popup', function() {
                 id="testPopup"
                 prop1="prop1_value"
                 updatePopupProps={handler}
-                xOffset={5}
-                yOffset={10}
+                offset={5}
             />
         );
         expect(wrapper).toMatchSnapshot();
@@ -125,7 +124,7 @@ describe('popup', function() {
     });
 
     it('should initialize on mount and clean up on unmount', function() {
-        const getRect = () => ({ bottom: 11, left: 22 });
+        const getRect = () => ({ bottom: 11, left: 22, right: 33, top: 44 });
 
         const addEventListener = jest.fn();
         const removeEventListener = jest.fn();
@@ -141,8 +140,7 @@ describe('popup', function() {
                 id="testPopup"
                 prop1="prop1_value"
                 updatePopupProps={handler}
-                xOffset={2}
-                yOffset={4}
+                offset={2}
             />
         );
         const instance = wrapper.instance();
@@ -151,8 +149,8 @@ describe('popup', function() {
         expect(addEventListener).toHaveBeenCalledWith('resize', instance.refreshPositionHandler);
         expect(mockSetState).toHaveBeenCalledWith({
             style: {
-                left: 24,
-                top: 15
+                left: 22,
+                top: 13
             }
         });
 
@@ -163,7 +161,7 @@ describe('popup', function() {
     });
 
     it('should refresh position when refreshPosition property changes', function() {
-        const getRect = () => ({ bottom: 11, left: 22 });
+        const getRect = () => ({ bottom: 11, left: 22, right: 33, top: 44 });
         const mockRefreshPosition = jest.fn();
         TestPopup.prototype.refreshPosition = mockRefreshPosition;
 
@@ -192,7 +190,7 @@ describe('popup', function() {
     });
 
     it('should close on window mouseup event', function() {
-        const getRect = () => ({ bottom: 11, left: 22 });
+        const getRect = () => ({ bottom: 11, left: 22, right: 33, top: 44 });
         const closePopup = jest.fn();
         const wrapper = mount(
             <TestPopup
@@ -211,7 +209,7 @@ describe('popup', function() {
     });
 
     it('should close on window resize event', function() {
-        const getRect = () => ({ bottom: 11, left: 22 });
+        const getRect = () => ({ bottom: 11, left: 22, right: 33, top: 44 });
         const requestAnimationFrame = callback => callback();
         const setPopupPosition = jest.fn();
         const wrapper = mount(
@@ -234,7 +232,7 @@ describe('popup', function() {
     });
 
     it('should stop event propagation on mouseup', function() {
-        const getRect = () => ({ bottom: 11, left: 22 });
+        const getRect = () => ({ bottom: 11, left: 22, right: 33, top: 44 });
         const stopPropagation = jest.fn();
         const wrapper = mount(
             <TestPopup

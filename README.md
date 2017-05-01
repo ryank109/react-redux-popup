@@ -2,6 +2,19 @@
 
 This is set of higher order components that enable popup behavior using react and redux.  I've tried to not define any styles on it so that the user can define their own style.  At least that's what I'm shooting for, but that might change in the future, based on the needs...
 
+### Features
+ - Portal design
+ - Auto positioning based on the resize and scrolling events (See [Scrolling Section](https://github.com/ryank109/react-redux-popup#scrolling))
+ - Smart positioning based on the popup content size and available space
+
+### Redux Actions
+ - `openPopup(id)`
+    - `id`: id of the popup to open
+ - `closePopup(id)`
+    - `id`: id of the popup to close
+ - `refreshPopupPosition()`
+    - Refresh popup position, such as on scroll. The refreshing is throttled, so that you don't have to throttle in your call.
+
 ### Higher Order Components
  - **Modal** - creates a modal in the center of the screen with layover, so that nothing can be clicked outside.  Must dispatch `closePopup` from the modal in order to close it
    - Properties:
@@ -12,12 +25,12 @@ This is set of higher order components that enable popup behavior using react an
 
  - **Popup** - creates a popup on the location specified in `options` argument on `openPopup`.  Clicking outside of the popup should close this popup or with dispatching `closePopup` action.
    - Properties:
+     - `anchor` - [default to 'bottom'] `bottom`|`left`|`right`|`top`
      - `getRect` - the required function to describe the position that the popup should appear. The return of the function should be same as `element.getBoundingClientRect()` object or use that for simplicity. i.e. `getRect={() => element.getBoundingClientRect()}`
      - `id` - required id
      - `popupClassName` - the popup class name
      - `style` - optional styles to apply on the popup
-     - `xOffset` - the left/right offset where the popup should appear
-     - `yOffset` - the top/bottom offset where the popup should appear
+     - `offset` - the offset distance
 
 ### Portal Component
 This component is the component where the popups are rendered to.  So, it's important that this component is specified after the main body so that popups are rendered on top of everything else.  The properties to this component mostly deals with the animation.
@@ -29,14 +42,6 @@ This component is the component where the popups are rendered to.  So, it's impo
    - `popupTransitionName`: [default to 'popup'] used for css animation
    - `popupTransitionEnterTimeout`: [default to 0] the popup enter animation duration in miliseconds
    - `popupTransitionLeaveTimeout`: [default to 0] the popup leave animation duration in miliseconds
-
-### Actions
- - `openPopup(id)`
-    - `id`: id of the popup to open
- - `closePopup(id)`
-    - `id`: id of the popup to close
- - `refreshPopupPosition()`
-    - Refresh popup position, such as on scroll. The refreshing is throttled, so that you don't have to throttle in your call.
 
 ### Usage
 
@@ -93,7 +98,10 @@ class App extends Component {
     render() {
         return (
             <div>
-                <button refs={e => { this.elem = e; }} onClick={() => this.props.openPopup('popup1'))} />
+                <button
+                    refs={e => { this.elem = e; }}
+                    onClick={() => this.props.openPopup('popup1'))}
+                />
                 <PopupMenu
                     getRect={() => this.elem.getBoundingClientRect()}
                     id="popup1"
@@ -142,4 +150,4 @@ To use, you must specify transition enter/leave timeout properties for `Portal` 
 
 ### Scrolling
 
-Scrolling event isn't something that can't be watched from global document, so the solution is to call `refreshPopupPosition` action. After all, there should be only one `Popup` open in most of the cases, and even if it's not, it'll update the position of the popup based on the `getRect` function. `Modal` doesn't get repositioned from this action.
+Scrolling event isn't something that can't be watched from global document, so the solution is to call `refreshPopupPosition` action to refresh the positions on the popups that are open. In most cases, there should be only one `Popup` open at a time. `Modal` doesn't get repositioned from this action.
