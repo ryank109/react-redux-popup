@@ -16,7 +16,7 @@ const menu2 = [
 ];
 
 const menu3 = [
-    { label: 'Dog' },
+    { label: 'Dog abcd defghijk ablkdj alsdkflas' },
     { label: 'Bird' },
     { label: 'Cat' },
     { label: 'Dinosaur' }
