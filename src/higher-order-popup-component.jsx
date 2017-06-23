@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import shallowEqual from 'fbjs/lib/shallowEqual';
 import { updatePopupProps, closePopup } from 'rrp/actions';
 import { add, remove, update } from 'rrp/popup-collection';
 
@@ -10,9 +11,14 @@ export const HigherOrderPopupComponent = (ComposedComponent, type) => {
             add(type, ComposedComponent, this.props);
         }
 
-        componentWillReceiveProps(nextProps) {
-            update(nextProps.id, nextProps);
-            this.props.updatePopupProps(nextProps.id, nextProps);
+        shouldComponentUpdate(nextProps) {
+            if (!shallowEqual(nextProps, this.props)) {
+                update(nextProps.id, nextProps);
+                this.props.updatePopupProps(nextProps.id, nextProps);
+            }
+
+            // this is empty component, so don't need to update
+            return false;
         }
 
         componentWillUnmount() {
@@ -25,6 +31,7 @@ export const HigherOrderPopupComponent = (ComposedComponent, type) => {
         }
     }
 
+    PopupComponent.displayName = 'HigherOrderPopupComponent';
     PopupComponent.propTypes = {
         closePopup: PropTypes.func.isRequired,
         id: PropTypes.string.isRequired,
