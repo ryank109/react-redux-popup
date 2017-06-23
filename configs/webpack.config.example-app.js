@@ -19,7 +19,9 @@ var VENDOR_DEPENDENCIES = [
   'classnames',
   'prop-types',
   'react',
-  'react-dom'
+  'react-dom',
+  'react-transition-group',
+  'redux'
 ];
 
 var appCss = new ExtractTextPlugin({ filename: 'example-app.css' });
@@ -63,13 +65,7 @@ module.exports = {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
-      options: {
-        postcss: [
-          autoprefixer({
-            browsers: ['last 2 version', 'ie >= 9']
-          })
-        ]
-      }
+      debug: true
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
@@ -100,7 +96,23 @@ module.exports = {
         test: /\.scss$/,
         include: appStylePath,
         use: appCss.extract({
-          use: ['css-loader', 'postcss-loader', 'sass-loader']
+          use: [
+            {
+              loader: 'css-loader',
+              options: { importLoaders: 1 }
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: function() {
+                  autoprefixer({
+                    browsers: ['last 2 version', 'ie >= 11']
+                  })
+                }
+              }
+            },
+            'sass-loader'
+          ]
         })
       },
       {

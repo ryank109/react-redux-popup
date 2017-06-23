@@ -1,8 +1,8 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
 
-var NODE_ENV = process.env.NODE_ENV;
-var env = {
+const NODE_ENV = process.env.NODE_ENV;
+const env = {
   production: NODE_ENV === 'production',
   staging: NODE_ENV === 'staging',
   test: NODE_ENV === 'test',
@@ -36,11 +36,11 @@ module.exports = {
       commonjs: 'react',
       amd: 'react'
     },
-    'react-addons-css-transition-group': {
-      root: 'ReactAddonsCssTransitionGroup"',
-      commonjs2: 'react-addons-css-transition-group',
-      commonjs: 'react-addons-css-transition-group',
-      amd: 'react-addons-css-transition-group'
+    'react-transition-group': {
+      root: 'ReactTransitionGroup"',
+      commonjs2: 'react-transition-group',
+      commonjs: 'react-transition-group',
+      amd: 'react-transition-group'
     },
     'react-dom': {
       root: 'ReactDOM',
@@ -53,6 +53,12 @@ module.exports = {
       commonjs2: 'react-redux',
       commonjs: 'react-redux',
       amd: 'react-redux'
+    },
+    'redux': {
+      root: 'Redux',
+      commonjs2: 'redux',
+      commonjs: 'redux',
+      amd: 'redux'
     }
   },
 
@@ -73,6 +79,10 @@ module.exports = {
       __STAGING__: env.staging,
       __PRODUCTION__: env.production,
       __CURRENT_ENV__: '\'' + (NODE_ENV) + '\''
+    }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
     }),
     new webpack.optimize.UglifyJsPlugin({
       output: {
