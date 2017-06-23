@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import { CSSTransitionGroup } from 'react-transition-group';
 import collection, { TYPE_MODAL, TYPE_POPUP } from 'rrp/popup-collection';
 
 export const popupSelector = state => state.popup;
@@ -14,22 +14,24 @@ function renderPopups(popupType, props) {
 
 export const Portal = props => (
     <div>
-        <ReactCSSTransitionGroup
+        <CSSTransitionGroup
             transitionName={props.modalTransitionName}
             transitionEnterTimeout={props.modalTransitionEnterTimeout}
             transitionLeaveTimeout={props.modalTransitionLeaveTimeout}
         >
             {renderPopups(TYPE_MODAL, props)}
-        </ReactCSSTransitionGroup>
-        <ReactCSSTransitionGroup
+        </CSSTransitionGroup>
+        <CSSTransitionGroup
             transitionName={props.popupTransitionName}
             transitionEnterTimeout={props.popupTransitionEnterTimeout}
             transitionLeaveTimeout={props.popupTransitionLeaveTimeout}
         >
             {renderPopups(TYPE_POPUP, props)}
-        </ReactCSSTransitionGroup>
+        </CSSTransitionGroup>
     </div>
 );
+
+Portal.displayName = 'Portal';
 
 Portal.propTypes = {
     modalTransitionName: PropTypes.string.isRequired,
