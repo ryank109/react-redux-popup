@@ -68,6 +68,7 @@ export const HOCPopup = ComposedComponent => {
 
         render() {
             return (
+                // eslint-disable-next-line jsx-a11y/no-static-element-interactions
                 <div
                     className={this.props.popupClassName}
                     onMouseUp={this.stopEvent}
@@ -80,6 +81,7 @@ export const HOCPopup = ComposedComponent => {
         }
     }
 
+    Popup.displayName = 'Popup';
     Popup.defaultProps = {
         anchor: 'bottom',
         offset: 0

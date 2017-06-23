@@ -63,20 +63,20 @@ exports[`popup should render the component with provider 1`] = `
     }
   }
 >
-  <Connect(PopupComponent)
+  <Connect(HigherOrderPopupComponent)
     closePopup={[Function]}
     getRect={[Function]}
     id="testPopup"
     prop1="prop1_value"
     updatePopupProps={[Function]}
   >
-    <PopupComponent
+    <HigherOrderPopupComponent
       closePopup={[Function]}
       getRect={[Function]}
       id="testPopup"
       prop1="prop1_value"
       updatePopupProps={[Function]}
     />
-  </Connect(PopupComponent)>
+  </Connect(HigherOrderPopupComponent)>
 </Provider>
 `;

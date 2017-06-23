@@ -56,6 +56,7 @@ export const HOCModal = ComposedComponent => {
         }
     }
 
+    Modal.displayName = 'Modal';
     Modal.propTypes = PROP_TYPES;
     return Modal;
 };

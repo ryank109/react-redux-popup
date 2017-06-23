@@ -2,7 +2,7 @@
 
 exports[`portal should not render the model when id is not present 1`] = `
 <div>
-  <ReactCSSTransitionGroup
+  <CSSTransitionGroup
     transitionAppear={false}
     transitionEnter={true}
     transitionEnterTimeout={0}
@@ -10,7 +10,7 @@ exports[`portal should not render the model when id is not present 1`] = `
     transitionLeaveTimeout={0}
     transitionName="modal"
   />
-  <ReactCSSTransitionGroup
+  <CSSTransitionGroup
     transitionAppear={false}
     transitionEnter={true}
     transitionEnterTimeout={0}
@@ -23,7 +23,7 @@ exports[`portal should not render the model when id is not present 1`] = `
 
 exports[`portal should not render the popup when id is not present 1`] = `
 <div>
-  <ReactCSSTransitionGroup
+  <CSSTransitionGroup
     transitionAppear={false}
     transitionEnter={true}
     transitionEnterTimeout={0}
@@ -31,7 +31,7 @@ exports[`portal should not render the popup when id is not present 1`] = `
     transitionLeaveTimeout={0}
     transitionName="modal"
   />
-  <ReactCSSTransitionGroup
+  <CSSTransitionGroup
     transitionAppear={false}
     transitionEnter={true}
     transitionEnterTimeout={0}
@@ -44,7 +44,7 @@ exports[`portal should not render the popup when id is not present 1`] = `
 
 exports[`portal should render the component 1`] = `
 <div>
-  <ReactCSSTransitionGroup
+  <CSSTransitionGroup
     transitionAppear={false}
     transitionEnter={true}
     transitionEnterTimeout={0}
@@ -52,7 +52,7 @@ exports[`portal should render the component 1`] = `
     transitionLeaveTimeout={0}
     transitionName="modal"
   />
-  <ReactCSSTransitionGroup
+  <CSSTransitionGroup
     transitionAppear={false}
     transitionEnter={true}
     transitionEnterTimeout={0}
@@ -65,7 +65,7 @@ exports[`portal should render the component 1`] = `
 
 exports[`portal should render the component with modal type 1`] = `
 <div>
-  <ReactCSSTransitionGroup
+  <CSSTransitionGroup
     transitionAppear={false}
     transitionEnter={true}
     transitionEnterTimeout={0}
@@ -77,8 +77,8 @@ exports[`portal should render the component with modal type 1`] = `
       id="modal1"
       prop1="value1"
     />
-  </ReactCSSTransitionGroup>
-  <ReactCSSTransitionGroup
+  </CSSTransitionGroup>
+  <CSSTransitionGroup
     transitionAppear={false}
     transitionEnter={true}
     transitionEnterTimeout={0}
@@ -91,7 +91,7 @@ exports[`portal should render the component with modal type 1`] = `
 
 exports[`portal should render the component with popup type 1`] = `
 <div>
-  <ReactCSSTransitionGroup
+  <CSSTransitionGroup
     transitionAppear={false}
     transitionEnter={true}
     transitionEnterTimeout={0}
@@ -99,7 +99,7 @@ exports[`portal should render the component with popup type 1`] = `
     transitionLeaveTimeout={0}
     transitionName="modal"
   />
-  <ReactCSSTransitionGroup
+  <CSSTransitionGroup
     transitionAppear={false}
     transitionEnter={true}
     transitionEnterTimeout={0}
@@ -111,6 +111,6 @@ exports[`portal should render the component with popup type 1`] = `
       id="popup1"
       prop1="value1"
     />
-  </ReactCSSTransitionGroup>
+  </CSSTransitionGroup>
 </div>
 `;

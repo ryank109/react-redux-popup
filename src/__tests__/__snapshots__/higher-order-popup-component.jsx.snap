@@ -3,7 +3,7 @@
 exports[`higher-order-popup-component should render the component 1`] = `null`;
 
 exports[`higher-order-popup-component should render the component with provider 1`] = `
-<Connect(PopupComponent)
+<Connect(HigherOrderPopupComponent)
   closePopup={[Function]}
   id="testPopup"
   prop1="prop1_value"

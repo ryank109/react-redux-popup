@@ -94,6 +94,21 @@ describe('higher-order-popup-component', function() {
         wrapper.unmount();
     });
 
+    it('should not update the props in the collection and call updatePopupProps when props are same', function() {
+        const updatePopupProps = jest.fn();
+        const wrapper = mount(
+            <TestComponent
+                closePopup={() => true}
+                id="testPopup"
+                prop1="prop1_value"
+                updatePopupProps={updatePopupProps}
+            />
+        );
+        wrapper.update();
+        expect(updatePopupProps).toHaveBeenCalledTimes(0);
+        wrapper.unmount();
+    });
+
     it('should warn the missing id property', function() {
         // eslint-disable-next-line no-console
         console.error = jest.fn();
