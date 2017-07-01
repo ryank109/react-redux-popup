@@ -1,6 +1,7 @@
 import { mount, shallow } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
+import { closePopup } from 'rrp/actions';
 import ConnectedComponent, { HOCPopup } from 'rrp/popup';
 import { clearAll } from 'rrp/popup-collection';
 
@@ -204,6 +205,25 @@ describe('popup', function() {
         window.dispatchEvent(new Event('mouseup'));
         expect(closePopup).toHaveBeenCalledTimes(1);
         expect(closePopup).toHaveBeenCalledWith('testPopup');
+
+        wrapper.unmount();
+    });
+
+    it('should dispatch closePopup action when closePopup is not specified on window mouseup event', function() {
+        const getRect = () => ({ bottom: 11, left: 22, right: 33, top: 44 });
+        const dispatch = jest.fn();
+        const wrapper = mount(
+            <TestPopup
+                dispatch={dispatch}
+                getRect={getRect}
+                id="testPopup"
+                prop1="prop1_value"
+                updatePopupProps={handler}
+            />
+        );
+        window.dispatchEvent(new Event('mouseup'));
+        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenCalledWith(closePopup('testPopup'));
 
         wrapper.unmount();
     });

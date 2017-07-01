@@ -23,7 +23,11 @@ export const HigherOrderPopupComponent = (ComposedComponent, type) => {
 
         componentWillUnmount() {
             remove(this.props.id);
-            this.props.closePopup(this.props.id);
+            if (this.props.closePopup) {
+                this.props.closePopup(this.props.id);
+                return;
+            }
+            this.props.dispatch(closePopup(this.props.id));
         }
 
         render() {
@@ -33,7 +37,8 @@ export const HigherOrderPopupComponent = (ComposedComponent, type) => {
 
     PopupComponent.displayName = 'HigherOrderPopupComponent';
     PopupComponent.propTypes = {
-        closePopup: PropTypes.func.isRequired,
+        closePopup: PropTypes.func,
+        dispatch: PropTypes.func,
         id: PropTypes.string.isRequired,
         updatePopupProps: PropTypes.func.isRequired
     };
@@ -43,5 +48,5 @@ export const HigherOrderPopupComponent = (ComposedComponent, type) => {
 
 export default (ComposedComponent, type) => connect(
     null,
-    { updatePopupProps, closePopup }
+    { updatePopupProps }
 )(HigherOrderPopupComponent(ComposedComponent, type));

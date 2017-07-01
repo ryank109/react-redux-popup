@@ -9,7 +9,8 @@ import { getPopupPosition } from 'rrp/utils';
 
 const PROP_TYPES = {
     anchor: PropTypes.oneOf(['bottom', 'left', 'right', 'top']),
-    closePopup: PropTypes.func.isRequired,
+    closePopup: PropTypes.func,
+    dispatch: PropTypes.func,
     getRect: PropTypes.func.isRequired,
     id: PropTypes.string.isRequired,
     popupClassName: PropTypes.string,
@@ -24,7 +25,11 @@ export const HOCPopup = ComposedComponent => {
             this.state = {};
 
             this.closePopup = () => {
-                props.closePopup(props.id);
+                if (props.closePopup) {
+                    props.closePopup(props.id);
+                    return;
+                }
+                props.dispatch(closePopup(props.id));
             };
             this.refreshPositionHandler = () => this.refreshPosition();
         }
@@ -92,4 +97,4 @@ export const HOCPopup = ComposedComponent => {
 };
 
 export default ComposedComponent => HigherOrderPopupComponent(
-    connect(popupSelector, { closePopup })(HOCPopup(ComposedComponent)), TYPE_POPUP);
+    connect(popupSelector)(HOCPopup(ComposedComponent)), TYPE_POPUP);
