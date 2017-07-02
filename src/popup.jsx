@@ -52,11 +52,12 @@ export const HOCPopup = ComposedComponent => {
         }
 
         setPopupPosition() {
+            const popupRect = this.popup.getBoundingClientRect();
             const style = getPopupPosition(
                 this.props.anchor,
                 this.props.getRect(),
-                this.popup.clientWidth,
-                this.popup.clientHeight,
+                popupRect.width,
+                popupRect.height,
                 window.innerWidth,
                 window.innerHeight,
                 this.props.offset);
