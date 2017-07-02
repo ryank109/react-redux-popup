@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { openPopup } from 'react-redux-popup';
+import { closePopup, openPopup } from 'react-redux-popup';
 import PopupMenu from 'app/components/popup-menu';
 
 const menu1 = [
@@ -83,4 +83,4 @@ class Menus extends Component {
     }
 }
 
-export default connect(null, { openPopup })(Menus);
+export default connect(null, { closePopup, openPopup })(Menus);

@@ -26,6 +26,7 @@ This is set of higher order components that enable popup behavior using react an
  - **Popup** - creates a popup on the location specified in `options` argument on `openPopup`.  Clicking outside of the popup should close this popup or with dispatching `closePopup` action.
    - Properties:
      - `anchor` - [default to 'bottom'] `bottom`|`left`|`right`|`top`
+     - `closePopup` - optionally define closePopup handler
      - `getRect` - the required function to describe the position that the popup should appear. The return of the function should be same as `element.getBoundingClientRect()` object or use that for simplicity. i.e. `getRect={() => element.getBoundingClientRect()}`
      - `id` - required id
      - `popupClassName` - the popup class name
