@@ -1,6 +1,6 @@
 {
   "name": "react-redux-popup",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "React redux popup",
   "main": "lib/react-redux-popup",
   "scripts": {
@@ -8,6 +8,7 @@
     "build": "NODE_ENV=production webpack --config ./configs/webpack.config.js --progress --profile --colors",
     "coverage": "./node_modules/jest/bin/jest.js --coverage",
     "lint": "eslint src/**",
+    "prepublishOnly": "npm run clean && rm -rf node_modules && npm cache clean && npm i && npm run build",
     "start": "node ./example-app/server.js",
     "test": "./node_modules/jest/bin/jest.js",
     "test-dev": "./node_modules/jest/bin/jest.js --watch"
