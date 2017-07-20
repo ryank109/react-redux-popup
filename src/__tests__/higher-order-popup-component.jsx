@@ -73,19 +73,18 @@ describe('higher-order-popup-component', function() {
         expect(closePopup).toHaveBeenCalledWith('testPopup');
     });
 
-    it('should dispatch closePopup action when closePopup is not specified', function() {
+    it('should not call closePopup action when closePopup is not specified', function() {
         const dispatch = jest.fn();
         const wrapper = mount(
             <TestComponent
-                dispatch={dispatch}
                 id="testPopup"
                 prop1="prop1_value"
                 updatePopupProps={handler}
             />
         );
+        expect(collection.length).toBe(1);
         wrapper.unmount();
-        expect(dispatch).toHaveBeenCalledTimes(1);
-        expect(dispatch).toHaveBeenCalledWith(closePopup('testPopup'));
+        expect(collection.length).toBe(0);
     });
 
     it('should update the props in the collection and call updatePopupProps', function() {

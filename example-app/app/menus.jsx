@@ -63,8 +63,7 @@ class Menus extends Component {
                     menuItems={menu}
                     onClick={() => true}
                     popupClassName="popup-menu"
-                    xOffset={10}
-                    yOffset={5}
+                    offset={5}
                 />
             )
         );
