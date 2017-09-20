@@ -1,32 +1,32 @@
 {
-  'parser': 'babel-eslint',
   'env': {
     'browser': true,
     'jest': true
   },
   'extends': 'airbnb',
   'globals': {
+    'React': true
   },
   'rules': {
     'arrow-parens': ['error', 'as-needed'],
     'class-methods-use-this': 0,
     'comma-dangle': ['error', 'never'],
+    'import/no-named-as-default': 0,
     'func-names': 0,
-    'import/extensions': 0,
-    'import/no-extraneous-dependencies': 0,
-    'import/no-unresolved': 0,
-    'import/prefer-default-export': 1,
     'indent': ['error', 4],
-    'no-func-assign': 0,
     'no-plusplus': ['error', { 'allowForLoopAfterthoughts': true }],
-    'no-shadow': ['error', { 'hoist': 'functions' }],
     'prefer-arrow-callback': 0,
+    'react/forbid-prop-types': 0,
     'react/jsx-indent': [2, 4],
     'react/jsx-indent-props': [2, 4],
-    'react/prefer-stateless-function': 1,
-    'react/react-in-jsx-scope': 0,
     'react/require-default-props': 0,
-    'react/sort-comp': 1,
     'space-before-function-paren': 0
+  },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "configs/webpack.config.js"
+      }
+    }
   }
 }
