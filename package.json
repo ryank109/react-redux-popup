@@ -2,7 +2,9 @@
   "name": "react-redux-popup",
   "version": "2.1.4",
   "description": "React redux popup",
+  "license": "MIT",
   "main": "lib/react-redux-popup",
+  "repository": "https://github.com/ryank109/react-redux-popup",
   "scripts": {
     "clean": "rimraf coverage lib test-reports",
     "build": "NODE_ENV=production webpack --config ./configs/webpack.config.js --progress --profile --colors",
