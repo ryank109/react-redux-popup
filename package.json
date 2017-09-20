@@ -1,6 +1,6 @@
 {
   "name": "react-redux-popup",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "React redux popup",
   "license": "MIT",
   "main": "lib/react-redux-popup",
