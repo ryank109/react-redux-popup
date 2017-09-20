@@ -75,6 +75,7 @@ exports[`portal should render the component with modal type 1`] = `
   >
     <TestComponent
       id="modal1"
+      key="modal1"
       prop1="value1"
     />
   </CSSTransitionGroup>
@@ -109,6 +110,7 @@ exports[`portal should render the component with popup type 1`] = `
   >
     <TestComponent
       id="popup1"
+      key="popup1"
       prop1="value1"
     />
   </CSSTransitionGroup>
