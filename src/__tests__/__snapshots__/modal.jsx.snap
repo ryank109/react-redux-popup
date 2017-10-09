@@ -1,111 +1,69 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`modal should render the component 1`] = `
-<div
-  id="testPopup"
->
-  <div />
-  <div
-    className=""
-    style={Object {}}
-  >
-    <ComposedComponent
-      closePopup={[Function]}
-      id="testPopup"
-      prop1="prop1_value"
-      updatePopupProps={[Function]}
-    />
-  </div>
-</div>
+<TransitionWrapper
+  getPortalElement={[Function]}
+  isOpen={false}
+  isPortalReady={false}
+  render={[Function]}
+  transitionEnterTimeout={300}
+  transitionExitTimeout={300}
+  transitionName="modal"
+/>
 `;
 
-exports[`modal should render the component with layover classname 1`] = `
-<div
-  id="testPopup"
->
+exports[`modal should render the render prop 1`] = `
+<div>
   <div
-    className="my-class"
+    className="my-layover"
   />
   <div
-    className=""
-    style={Object {}}
-  >
-    <ComposedComponent
-      closePopup={[Function]}
-      id="testPopup"
-      layoverClassName="my-class"
-      prop1="prop1_value"
-      updatePopupProps={[Function]}
-    />
-  </div>
-</div>
-`;
-
-exports[`modal should render the component with popup classname 1`] = `
-<div
-  id="testPopup"
->
-  <div />
-  <div
-    className="my-class"
-    style={Object {}}
-  >
-    <ComposedComponent
-      closePopup={[Function]}
-      id="testPopup"
-      popupClassName="my-class"
-      prop1="prop1_value"
-      updatePopupProps={[Function]}
-    />
-  </div>
-</div>
-`;
-
-exports[`modal should render the component with popup classname 2`] = `
-<div
-  id="testPopup"
->
-  <div />
-  <div
-    className="my-class"
-    style={Object {}}
-  >
-    <ComposedComponent
-      closePopup={[Function]}
-      id="testPopup"
-      popupClassName="my-class"
-      prop1="prop1_value"
-      updatePopupProps={[Function]}
-    />
-  </div>
-</div>
-`;
-
-exports[`modal should render the component with provider 1`] = `
-<Provider
-  store={
-    Object {
-      "clearActions": [Function],
-      "dispatch": [Function],
-      "getActions": [Function],
-      "getState": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
+    className="my-popup"
+    style={
+      Object {
+        "color": "#fff",
+        "left": 0,
+        "top": 0,
+      }
     }
-  }
->
-  <Connect(HigherOrderPopupComponent)
-    closePopup={[Function]}
-    id="testPopup"
-    prop1="prop1_value"
-    updatePopupProps={[Function]}
   >
-    <HigherOrderPopupComponent
-      closePopup={[Function]}
-      id="testPopup"
-      prop1="prop1_value"
-      updatePopupProps={[Function]}
-    />
-  </Connect(HigherOrderPopupComponent)>
-</Provider>
+    <div>
+      View
+    </div>
+  </div>
+</div>
+`;
+
+exports[`modal should render the render prop 2`] = `
+<div>
+  <div
+    className="my-layover"
+  />
+  <div
+    className="my-popup"
+    style={
+      Object {
+        "color": "#fff",
+        "left": 0,
+        "top": 0,
+      }
+    }
+  >
+    <div>
+      View
+    </div>
+  </div>
+</div>
+`;
+
+exports[`modal should render with modal prop 1`] = `
+<TransitionWrapper
+  getPortalElement={[Function]}
+  isOpen={true}
+  isPortalReady={false}
+  render={[Function]}
+  transitionEnterTimeout={300}
+  transitionExitTimeout={300}
+  transitionName="modal"
+/>
 `;

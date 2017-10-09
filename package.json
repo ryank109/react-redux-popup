@@ -1,6 +1,6 @@
 {
   "name": "react-redux-popup",
-  "version": "2.1.6",
+  "version": "3.0.0",
   "description": "React redux popup",
   "license": "MIT",
   "main": "lib/react-redux-popup",
@@ -12,7 +12,7 @@
     "lint": "eslint src/**",
     "start": "node ./example-app/server.js",
     "test": "./node_modules/jest/bin/jest.js",
-    "test-dev": "./node_modules/jest/bin/jest.js --watch"
+    "test-dev": "./node_modules/jest/bin/jest.js --watchAll"
   },
   "jest": {
     "moduleNameMapper": {
@@ -39,11 +39,12 @@
     "babel-preset-env": "^1.5.2",
     "babel-preset-react": "^6.24.1",
     "babel-preset-react-hmre": "^1.1.1",
+    "babel-preset-stage-2": "^6.24.1",
     "classnames": "^2.2.5",
     "css-loader": "^0.28.4",
-    "enzyme": "^3.0.0",
-    "enzyme-adapter-react-16": "^1.0.0",
-    "enzyme-to-json": "^3.0.1",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.1",
+    "enzyme-to-json": "^3.1.2",
     "eslint": "^4.7.2",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-import-resolver-webpack": "^0.8.3",
@@ -63,7 +64,7 @@
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.5",
     "react-test-renderer": "^16.0.0",
-    "react-transition-group": "^2.2.0",
+    "react-transition-group": "^2.2.1",
     "redux": "^3.7.0",
     "redux-mock-store": "^1.2.3",
     "rimraf": "^2.6.1",
@@ -72,15 +73,12 @@
     "webpack-dev-middleware": "^1.11.0",
     "webpack-hot-middleware": "^2.18.0"
   },
-  "dependencies": {
-    "fbjs": "^0.8.16"
-  },
   "peerDependencies": {
     "prop-types": ">=15.0.0",
     "react": ">=16.0.0",
     "react-dom": ">=16.0.0",
     "react-redux": ">=4.0.0",
-    "react-transition-group": ">=1.0.0",
+    "react-transition-group": ">=2.0.0",
     "redux": ">=3.0.0"
   }
 }

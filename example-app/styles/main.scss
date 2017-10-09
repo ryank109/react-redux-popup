@@ -83,7 +83,7 @@ html, body {
     }
 }
 
-.modal-leave {
+.modal-exit {
     & .modal-container {
         opacity: 1;
         transform: scale(1);
@@ -94,7 +94,7 @@ html, body {
     }
 }
 
-.modal-leave.modal-leave-active {
+.modal-exit.modal-exit-active {
     & .modal-container {
         opacity: 0.01;
         transform: scale(0.7);
@@ -116,10 +116,10 @@ html, body {
     }
 }
 
-.popup-leave {
+.popup-exit {
     opacity: 1;
 
-    &.popup-leave-active {
+    &.popup-exit-active {
         opacity: 0.01;
         transition: opacity 100ms ease-in;
     }

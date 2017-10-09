@@ -1,37 +1,27 @@
 {
-    env: {
-        development: {
-            presets: [
+    "env": {
+        "test": {
+            "presets": [
                 ["env", {
-                    targets: {
-                        browsers: ["last 2 versions", "ie >= 11"]
+                    "targets": {
+                        "browsers": ["last 2 versions", "ie >= 11"]
                     },
-                    modules: false,
-                    useBuiltIns: true
+                    "useBuiltIns": true
                 }],
-                "react-hmre"
-            ]
-        },
-        test: {
-            presets: [
-                ["env", {
-                    targets: {
-                        browsers: ["last 2 versions", "ie >= 11"]
-                    },
-                    useBuiltIns: true
-                }]
+                "stage-2",
+                "react"
             ]
         }
     },
-    plugins: ["transform-object-rest-spread"],
-    presets: [
+    "presets": [
         ["env", {
-            targets: {
-                browsers: ["last 2 versions", "ie >= 11"]
+            "targets": {
+                "browsers": ["last 2 versions", "ie >= 11"]
             },
-            modules: false,
-            useBuiltIns: true
+            "modules": false,
+            "useBuiltIns": true
         }],
+        "stage-2",
         "react"
     ]
 }

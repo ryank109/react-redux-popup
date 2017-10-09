@@ -1,65 +1,50 @@
-import { Component } from 'react';
 import PropTypes from 'prop-types';
-import HigherOrderPopupComponent from 'rrp/higher-order-popup-component';
-import { TYPE_MODAL } from 'rrp/popup-collection';
+import { connect } from 'react-redux';
+import ModalComponent from './modal-component';
+import { popupSelector } from './popup';
+import { getPortalElement } from './portal';
+import TransitionWrapper from './transition-wrapper';
 
-const PROP_TYPES = {
+export const Modal = props => (
+    <TransitionWrapper
+        getPortalElement={props.getPortalElement}
+        isOpen={!!props[props.id]}
+        isPortalReady={props.isPortalReady}
+        render={() => (
+            <ModalComponent
+                className={props.className}
+                layoverClassName={props.layoverClassName}
+                render={props.render}
+                style={props.style}
+            />
+        )}
+        transitionEnterTimeout={props.transitionEnterTimeout}
+        transitionExitTimeout={props.transitionExitTimeout}
+        transitionName={props.transitionName}
+    />
+);
+
+Modal.propTypes = {
+    className: PropTypes.string,
+    getPortalElement: PropTypes.func.isRequired,
     id: PropTypes.string.isRequired,
+    isPortalReady: PropTypes.bool.isRequired,
     layoverClassName: PropTypes.string,
-    popupClassName: PropTypes.string,
-    style: PropTypes.object
+    render: PropTypes.func.isRequired,
+    style: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+    transitionEnterTimeout: PropTypes.number.isRequired,
+    transitionExitTimeout: PropTypes.number.isRequired,
+    transitionName: PropTypes.string.isRequired,
 };
 
-export const HOCModal = ComposedComponent => {
-    class Modal extends Component {
-        constructor(props) {
-            super(props);
-            this.resizeHandler =
-                () => window.requestAnimationFrame(() => this.updatePosition());
-            this.state = { style: {} };
-        }
-
-        componentDidMount() {
-            this.updatePosition();
-            window.addEventListener('resize', this.resizeHandler);
-        }
-
-        componentWillUnmount() {
-            window.removeEventListener('resize', this.resizeHandler);
-        }
-
-        updatePosition() {
-            const { clientHeight, clientWidth } = this.modal;
-            this.setState({
-                style: {
-                    left: (window.innerWidth - clientWidth) / 2,
-                    top: (window.innerHeight - clientHeight) / 2
-                }
-            });
-        }
-
-        render() {
-            const className = `${this.props.popupClassName ? this.props.popupClassName : ''}`;
-            const style = {
-                ...this.state.style,
-                ...this.props.style
-            };
-
-            return (
-                <div id={this.props.id}>
-                    <div className={this.props.layoverClassName} />
-                    <div className={className} ref={e => { this.modal = e; }} style={style}>
-                        <ComposedComponent {...this.props} />
-                    </div>
-                </div>
-            );
-        }
-    }
-
-    Modal.displayName = 'Modal';
-    Modal.propTypes = PROP_TYPES;
-    return Modal;
+Modal.defaultProps = {
+    getPortalElement,
+    className: 'modal-container',
+    layoverClassName: 'modal-layover',
+    isPortalReady: false,
+    transitionEnterTimeout: 300,
+    transitionExitTimeout: 300,
+    transitionName: 'modal',
 };
 
-export default ComposedComponent => HigherOrderPopupComponent(
-    HOCModal(ComposedComponent), TYPE_MODAL);
+export default connect(popupSelector)(Modal);

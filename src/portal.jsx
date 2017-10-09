@@ -1,54 +1,35 @@
 import PropTypes from 'prop-types';
+import { Component } from 'react';
 import { connect } from 'react-redux';
-import { CSSTransitionGroup } from 'react-transition-group';
-import collection, { TYPE_MODAL, TYPE_POPUP } from 'rrp/popup-collection';
+import { portalInitialized } from './actions';
 
-export const popupSelector = state => state.popup;
+let PORTAL_ELEMENT;
 
-function renderPopups(popupType, props) {
-    return collection
-        .filter(popup => popup[0] === popupType && props[popup[2].id])
-        // eslint-disable-next-line no-unused-vars
-        .map(([type, Popup, popupProps]) => <Popup key={popupProps.id} {...popupProps} />);
+export function setPortalElement(elem) {
+    PORTAL_ELEMENT = elem;
 }
 
-export const Portal = props => (
-    <div>
-        <CSSTransitionGroup
-            transitionName={props.modalTransitionName}
-            transitionEnterTimeout={props.modalTransitionEnterTimeout}
-            transitionLeaveTimeout={props.modalTransitionLeaveTimeout}
-        >
-            {renderPopups(TYPE_MODAL, props)}
-        </CSSTransitionGroup>
-        <CSSTransitionGroup
-            transitionName={props.popupTransitionName}
-            transitionEnterTimeout={props.popupTransitionEnterTimeout}
-            transitionLeaveTimeout={props.popupTransitionLeaveTimeout}
-        >
-            {renderPopups(TYPE_POPUP, props)}
-        </CSSTransitionGroup>
-    </div>
-);
+export function getPortalElement() {
+    return PORTAL_ELEMENT;
+}
 
-Portal.displayName = 'Portal';
+export class Portal extends Component {
+    componentDidMount() {
+        this.props.portalInitialized();
+    }
+
+    shouldComponentUpdate() {
+        // nothing to update... EVER
+        return false;
+    }
+
+    render() {
+        return <div ref={setPortalElement} />;
+    }
+}
 
 Portal.propTypes = {
-    modalTransitionName: PropTypes.string.isRequired,
-    modalTransitionEnterTimeout: PropTypes.number.isRequired,
-    modalTransitionLeaveTimeout: PropTypes.number.isRequired,
-    popupTransitionName: PropTypes.string.isRequired,
-    popupTransitionEnterTimeout: PropTypes.number.isRequired,
-    popupTransitionLeaveTimeout: PropTypes.number.isRequired
+    portalInitialized: PropTypes.func.isRequired,
 };
 
-Portal.defaultProps = {
-    modalTransitionName: 'modal',
-    modalTransitionEnterTimeout: 0,
-    modalTransitionLeaveTimeout: 0,
-    popupTransitionName: 'popup',
-    popupTransitionEnterTimeout: 0,
-    popupTransitionLeaveTimeout: 0
-};
-
-export default connect(popupSelector)(Portal);
+export default connect(null, { portalInitialized })(Portal);

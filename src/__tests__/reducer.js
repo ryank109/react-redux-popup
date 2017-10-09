@@ -1,72 +1,64 @@
-import { closePopup, openPopup, refreshPopupPosition, updatePopupProps } from 'rrp/actions';
+import { closePopup, portalInitialized, openPopup, refreshPopupPosition } from 'rrp/actions';
 import reducer from 'rrp/reducer';
 
-describe('reducer', function() {
-    it('should return open popup state with OPEN_POPUP action', function() {
+describe('reducer', () => {
+    it('should return open popup state with OPEN_POPUP action', () => {
         const state = {};
         const action1 = openPopup('1', {});
         let nextState = reducer(state, action1);
         expect(nextState).toEqual({
             1: true,
-            '1_rect': {}
         });
 
         // try the same action with same popup id
         nextState = reducer(state, action1);
         expect(nextState).toEqual({
             1: true,
-            '1_rect': {}
         });
 
         const action2 = openPopup('2');
         nextState = reducer(nextState, action2);
         expect(nextState).toEqual({
             1: true,
-            '1_rect': {},
             2: true,
-            '2_rect': undefined
         });
     });
 
-    it('should refresh popup position', function() {
+    it('should refresh popup position', () => {
         const state = {};
         const action = refreshPopupPosition();
         const nextState = reducer(state, action);
         expect(nextState).toEqual({
-            refreshPosition: true
+            refreshPosition: true,
         });
     });
 
-    it('should refresh popup position with refreshPosition state', function() {
+    it('should refresh popup position with refreshPosition state', () => {
         const state = {
-            refreshPosition: true
+            refreshPosition: true,
         };
         const action = refreshPopupPosition();
         const nextState = reducer(state, action);
         expect(nextState).toEqual({
-            refreshPosition: false
+            refreshPosition: false,
         });
     });
 
-    it('should return close popup state with CLOSE_POPUP action', function() {
+    it('should return close popup state with CLOSE_POPUP action', () => {
         const state = {
             1: true,
-            '1_rect': {},
             2: true,
-            '2_rect': undefined
         };
         const action1 = closePopup('1');
         let nextState = reducer(state, action1);
         expect(nextState).toEqual({
             2: true,
-            '2_rect': undefined
         });
 
         const action2 = closePopup('NotInState');
         nextState = reducer(nextState, action2);
         expect(nextState).toEqual({
             2: true,
-            '2_rect': undefined
         });
 
         const action3 = closePopup('2');
@@ -74,27 +66,22 @@ describe('reducer', function() {
         expect(nextState).toEqual({});
     });
 
-    it('should update popup properties', function() {
-        const state = {};
-        const action = updatePopupProps('1', { a: '1', b: '2' });
-        const nextState = reducer(state, action);
-        expect(nextState).toEqual({
-            '1_props': { a: '1', b: '2' }
-        });
-    });
-
-    it('should update popup properties with existing props', function() {
+    it('should set the portal ready flag', () => {
         const state = {
-            '1_props': { something: 'a' }
+            isPortalReady: false,
         };
-        const action = updatePopupProps('1', { a: '1', b: '2' });
+        const action = portalInitialized();
         const nextState = reducer(state, action);
+        expect(nextState).not.toBe(state);
         expect(nextState).toEqual({
-            '1_props': { a: '1', b: '2' }
+            isPortalReady: true,
         });
     });
 
-    it('should return the empty state', function() {
-        expect(reducer(undefined, { type: 'unknown_action' })).toEqual({});
+    it('should return the default state', () => {
+        expect(reducer(undefined, { type: 'unknown_action' })).toEqual({
+            isPortalReady: false,
+            refreshPosition: false,
+        });
     });
 });

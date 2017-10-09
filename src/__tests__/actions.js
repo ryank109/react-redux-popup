@@ -1,36 +1,31 @@
 import * as Actions from 'rrp/actions';
 
-describe('actions', function() {
-    it('should return open popup action', function() {
+describe('actions', () => {
+    it('should return open popup action', () => {
         const popupId = 'popupId1';
-        const rect = 'rect1';
-        expect(Actions.openPopup(popupId, rect)).toEqual({
+        expect(Actions.openPopup(popupId)).toEqual({
             popupId,
-            rect,
-            type: Actions.OPEN_POPUP
+            type: Actions.OPEN_POPUP,
         });
     });
 
-    it('should return close popup action', function() {
+    it('should return close popup action', () => {
         const popupId = 'popupId1';
         expect(Actions.closePopup(popupId)).toEqual({
             popupId,
-            type: Actions.CLOSE_POPUP
+            type: Actions.CLOSE_POPUP,
         });
     });
 
-    it('should return refresh popup action', function() {
+    it('should return portal initialized action', () => {
+        expect(Actions.portalInitialized()).toEqual({
+            type: Actions.PORTAL_INITIALIZED,
+        });
+    });
+
+    it('should return refresh popup action', () => {
         expect(Actions.refreshPopupPosition()).toEqual({
-            type: Actions.REFRESH_POPUP_POSITION
-        });
-    });
-
-    it('should return update popup action', function() {
-        const popupId = 'popupId1';
-        expect(Actions.updatePopupProps(popupId, { newProp: 'val1' })).toEqual({
-            popupId,
-            props: { newProp: 'val1' },
-            type: Actions.UPDATE_POPUP_PROPS
+            type: Actions.REFRESH_POPUP_POSITION,
         });
     });
 });
