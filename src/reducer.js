@@ -1,39 +1,37 @@
 import {
     CLOSE_POPUP,
     OPEN_POPUP,
+    PORTAL_INITIALIZED,
     REFRESH_POPUP_POSITION,
-    UPDATE_POPUP_PROPS
-} from 'rrp/actions';
+} from './actions';
 
 const reducers = {
-    [OPEN_POPUP]: (state, action) => ({
+    [OPEN_POPUP]: (state, { popupId }) => ({
         ...state,
-        [action.popupId]: true,
-        [`${action.popupId}_rect`]: action.rect
+        [popupId]: true,
     }),
-    [CLOSE_POPUP]: (state, action) => {
-        const keys = Object.keys(state);
-        const newState = {};
-        keys.forEach(key => {
-            if (key !== action.popupId
-                && key !== `${action.popupId}_rect`
-                && key !== `${action.popupId}_props`) {
-                newState[key] = state[key];
-            }
-        });
+    [CLOSE_POPUP]: (state, { popupId }) => {
+        if (!state[popupId]) { return state; }
+        const newState = { ...state };
+        delete newState[popupId];
         return newState;
     },
+    [PORTAL_INITIALIZED]: state => ({
+        ...state,
+        isPortalReady: true,
+    }),
     [REFRESH_POPUP_POSITION]: state => ({
         ...state,
-        refreshPosition: !state.refreshPosition
+        refreshPosition: !state.refreshPosition,
     }),
-    [UPDATE_POPUP_PROPS]: (state, action) => ({
-        ...state,
-        [`${action.popupId}_props`]: action.props
-    })
 };
 
-export default function popup(state = {}, action) {
+const defaultState = {
+    isPortalReady: false,
+    refreshPosition: false,
+};
+
+export default (state = defaultState, action) => {
     const reducer = reducers[action.type];
     return reducer ? reducer(state, action) : state;
-}
+};

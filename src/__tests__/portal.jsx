@@ -1,49 +1,37 @@
-import { shallow } from 'enzyme';
-import configureStore from 'redux-mock-store';
-import { Provider } from 'react-redux';
-import ConnectedComponent, { Portal, popupSelector } from 'rrp/portal';
-import collection, { TYPE_MODAL, TYPE_POPUP, add, clearAll } from 'rrp/popup-collection';
+import { mount, shallow } from 'enzyme';
+// import configureStore from 'redux-mock-store';
+// import { Provider } from 'react-redux';
+import { Portal, getPortalElement, setPortalElement } from 'rrp/portal';
 
-describe('portal', function() {
-    const mockStore = configureStore();
-    const TestComponent = props => <div>test component</div>;
-
-    beforeEach(clearAll);
-    afterEach(clearAll);
-
-    it('should render the component', function() {
-        const wrapper = shallow(<Portal />);
+describe('portal', () => {
+    it('should render the component', () => {
+        const wrapper = shallow(<Portal portalInitialized={() => true} />);
         expect(wrapper).toMatchSnapshot();
     });
 
-    it('should render the component with modal type', function() {
-        add(TYPE_MODAL, TestComponent, { id: 'modal1', prop1: 'value1' });
-        const wrapper = shallow(<Portal modal1 />);
+    it('should initialize the portal element on mount', () => {
+        const portalInitialized = jest.fn();
+        const wrapper = mount(<Portal portalInitialized={portalInitialized} />);
         expect(wrapper).toMatchSnapshot();
+        expect(portalInitialized).toHaveBeenCalledTimes(1);
     });
 
-    it('should render the component with popup type', function() {
-        add(TYPE_POPUP, TestComponent, { id: 'popup1', prop1: 'value1' });
-        const wrapper = shallow(<Portal popup1 />);
-        expect(wrapper).toMatchSnapshot();
+    it('should not update on prop changes', () => {
+        const spy = jest.spyOn(Portal.prototype, 'shouldComponentUpdate');
+
+        const portalInitialized = jest.fn();
+        const wrapper = shallow(<Portal portalInitialized={portalInitialized} />);
+        wrapper.setProps({ portalInitialized: () => true });
+
+        expect(spy).toHaveBeenCalledTimes(1);
+
+        spy.mockReset();
+        spy.mockRestore();
     });
 
-    it('should not render the model when id is not present', function() {
-        add(TYPE_MODAL, TestComponent, { id: 'modal1', prop1: 'value1' });
-        const wrapper = shallow(<Portal />);
-        expect(wrapper).toMatchSnapshot();
-    });
-
-    it('should not render the popup when id is not present', function() {
-        add(TYPE_POPUP, TestComponent, { id: 'popup1', prop1: 'value1' });
-        const wrapper = shallow(<Portal />);
-        expect(wrapper).toMatchSnapshot();
-    });
-
-    it('should return the state', function() {
-        const state = {
-            popup: { prop1: 'value1' }
-        };
-        expect(popupSelector(state)).toEqual({ prop1: 'value1' });
+    it('should set and get portal element', () => {
+        const elem = 'some elem';
+        setPortalElement(elem);
+        expect(getPortalElement()).toBe(elem);
     });
 });

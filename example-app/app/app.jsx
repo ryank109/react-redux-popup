@@ -20,18 +20,8 @@ class App extends Component {
                 <div className="abc" style={{height:'1000px'}}>
                     <Menus />
                 </div>
-                <ModalPopup
-                    closePopup={this.props.closePopup}
-                    id="modal1"
-                    layoverClassName="modal-layover"
-                    popupClassName="modal-container"
-                />
-                <Portal
-                    modalTransitionEnterTimeout={300}
-                    modalTransitionLeaveTimeout={300}
-                    popupTransitionEnterTimeout={100}
-                    popupTransitionLeaveTimeout={100}
-                />
+                <ModalPopup id="modal1" />
+                <Portal />
             </div>
         );
     }

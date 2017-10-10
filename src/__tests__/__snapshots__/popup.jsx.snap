@@ -1,82 +1,43 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`popup should render the component 1`] = `
-<div
-  onMouseUp={[Function]}
->
-  <ComposedComponent
-    anchor="bottom"
-    closePopup={[Function]}
-    getRect={[Function]}
-    id="testPopup"
-    offset={0}
-    prop1="prop1_value"
-    updatePopupProps={[Function]}
-  />
-</div>
+exports[`popup should render the component with defaults 1`] = `
+<TransitionWrapper
+  getPortalElement={[Function]}
+  isOpen={true}
+  isPortalReady={false}
+  render={[Function]}
+  transitionEnterTimeout={100}
+  transitionExitTimeout={100}
+  transitionName="popup"
+/>
 `;
 
-exports[`popup should render the component with offsets 1`] = `
-<div
-  onMouseUp={[Function]}
->
-  <ComposedComponent
-    anchor="bottom"
-    closePopup={[Function]}
-    getRect={[Function]}
-    id="testPopup"
-    offset={5}
-    prop1="prop1_value"
-    updatePopupProps={[Function]}
-  />
-</div>
+exports[`popup should render the component without testPopup prop 1`] = `
+<TransitionWrapper
+  getPortalElement={[Function]}
+  isOpen={false}
+  isPortalReady={false}
+  render={[Function]}
+  transitionEnterTimeout={100}
+  transitionExitTimeout={100}
+  transitionName="popup"
+/>
 `;
 
-exports[`popup should render the component with popup classname 1`] = `
+exports[`popup should render the render prop 1`] = `
 <div
-  className="my-class"
+  className="my-popup"
   onMouseUp={[Function]}
->
-  <ComposedComponent
-    anchor="bottom"
-    closePopup={[Function]}
-    getRect={[Function]}
-    id="testPopup"
-    offset={0}
-    popupClassName="my-class"
-    prop1="prop1_value"
-    updatePopupProps={[Function]}
-  />
-</div>
-`;
-
-exports[`popup should render the component with provider 1`] = `
-<Provider
-  store={
+  style={
     Object {
-      "clearActions": [Function],
-      "dispatch": [Function],
-      "getActions": [Function],
-      "getState": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
+      "color": "#fff",
+      "left": undefined,
+      "top": undefined,
     }
   }
 >
-  <Connect(HigherOrderPopupComponent)
-    closePopup={[Function]}
-    getRect={[Function]}
-    id="testPopup"
-    prop1="prop1_value"
-    updatePopupProps={[Function]}
-  >
-    <HigherOrderPopupComponent
-      closePopup={[Function]}
-      getRect={[Function]}
-      id="testPopup"
-      prop1="prop1_value"
-      updatePopupProps={[Function]}
-    />
-  </Connect(HigherOrderPopupComponent)>
-</Provider>
+  <div>
+    Test
+  </div>
+</div>
 `;

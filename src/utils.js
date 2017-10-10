@@ -17,7 +17,7 @@ export function calculatePosition(
     ceiling,
     floor,
     offset,
-    shouldMatchPositive
+    shouldMatchPositive,
 ) {
     const offsetPosition = getOffsetPosition(floor, offset);
     const offsetNegativePosition = getNegativeOffsetPosition(ceiling, offset, popupSize);
@@ -37,7 +37,7 @@ export function getPopupPosition(
     popupHeight,
     windowWidth,
     windowHeight,
-    offset
+    offset,
 ) {
     switch (anchor) {
     case 'bottom':
@@ -54,7 +54,7 @@ export function getPopupPosition(
                 rect.top,
                 rect.bottom,
                 offset,
-                anchor === 'bottom')
+                anchor === 'bottom'),
         };
     default: // left and right
         return {
@@ -69,7 +69,7 @@ export function getPopupPosition(
                 windowHeight,
                 popupHeight,
                 rect.top,
-                rect.bottom)
+                rect.bottom),
         };
     }
 }

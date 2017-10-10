@@ -1,101 +1,72 @@
-import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { closePopup } from 'rrp/actions';
-import HigherOrderPopupComponent from 'rrp/higher-order-popup-component';
-import { TYPE_POPUP } from 'rrp/popup-collection';
-import { popupSelector } from 'rrp/portal';
-import { getPopupPosition } from 'rrp/utils';
+import { closePopup } from './actions';
+import PopupComponent from './popup-component';
+import { getPortalElement } from './portal';
+import TransitionWrapper from './transition-wrapper';
 
-const PROP_TYPES = {
-    anchor: PropTypes.oneOf(['bottom', 'left', 'right', 'top']),
+export const popupSelector = state => state.popup;
+
+export function closePopupHandler(id, callback, dispatch) {
+    return () => {
+        if (callback) {
+            callback(id);
+            return;
+        }
+        dispatch(closePopup(id));
+    };
+}
+
+export const Popup = props => (
+    <TransitionWrapper
+        getPortalElement={props.getPortalElement}
+        isOpen={!!props[props.id]}
+        isPortalReady={props.isPortalReady}
+        render={() => (
+            <PopupComponent
+                anchor={props.anchor}
+                className={props.className}
+                closePopup={closePopupHandler(props.id, props.closePopup, props.dispatch)}
+                getRect={props.getRect}
+                offset={props.offset}
+                refreshPosition={props.refreshPosition}
+                render={props.render}
+                style={props.style}
+            />
+        )}
+        transitionEnterTimeout={props.transitionEnterTimeout}
+        transitionExitTimeout={props.transitionExitTimeout}
+        transitionName={props.transitionName}
+    />
+);
+
+Popup.propTypes = {
+    anchor: PropTypes.oneOf(['bottom', 'left', 'right', 'top']).isRequired,
+    className: PropTypes.string,
     closePopup: PropTypes.func,
-    dispatch: PropTypes.func,
+    dispatch: PropTypes.func.isRequired,
+    getPortalElement: PropTypes.func.isRequired,
     getRect: PropTypes.func.isRequired,
     id: PropTypes.string.isRequired,
-    popupClassName: PropTypes.string,
-    refreshPosition: PropTypes.bool,
-    offset: PropTypes.number.isRequired
+    isPortalReady: PropTypes.bool.isRequired,
+    offset: PropTypes.number.isRequired,
+    refreshPosition: PropTypes.bool.isRequired,
+    render: PropTypes.func.isRequired,
+    style: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+    transitionEnterTimeout: PropTypes.number.isRequired,
+    transitionExitTimeout: PropTypes.number.isRequired,
+    transitionName: PropTypes.string.isRequired,
 };
 
-export const HOCPopup = ComposedComponent => {
-    class Popup extends Component {
-        constructor(props) {
-            super(props);
-            this.state = {};
-
-            this.closePopup = () => {
-                if (props.closePopup) {
-                    props.closePopup(props.id);
-                    return;
-                }
-                props.dispatch(closePopup(props.id));
-            };
-            this.refreshPositionHandler = () => this.refreshPosition();
-        }
-
-        componentDidMount() {
-            this.setPopupPosition();
-            window.addEventListener('mouseup', this.closePopup);
-            window.addEventListener('resize', this.refreshPositionHandler);
-        }
-
-        componentWillReceiveProps(nextProps) {
-            if (this.props.refreshPosition !== nextProps.refreshPosition) {
-                this.refreshPosition();
-            }
-        }
-
-        componentWillUnmount() {
-            window.removeEventListener('mouseup', this.closePopup);
-            window.removeEventListener('resize', this.refreshPositionHandler);
-        }
-
-        setPopupPosition() {
-            const popupRect = this.popup.getBoundingClientRect();
-            const style = getPopupPosition(
-                this.props.anchor,
-                this.props.getRect(),
-                popupRect.width,
-                popupRect.height,
-                window.innerWidth,
-                window.innerHeight,
-                this.props.offset);
-            this.setState({ style });
-        }
-
-        refreshPosition() {
-            window.requestAnimationFrame(() => this.setPopupPosition());
-        }
-
-        stopEvent(event) {
-            event.stopPropagation();
-        }
-
-        render() {
-            return (
-                // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-                <div
-                    className={this.props.popupClassName}
-                    onMouseUp={this.stopEvent}
-                    ref={e => { this.popup = e; }}
-                    style={this.state.style}
-                >
-                    <ComposedComponent {...this.props} />
-                </div>
-            );
-        }
-    }
-
-    Popup.displayName = 'Popup';
-    Popup.defaultProps = {
-        anchor: 'bottom',
-        offset: 0
-    };
-
-    Popup.propTypes = PROP_TYPES;
-    return Popup;
+Popup.defaultProps = {
+    anchor: 'bottom',
+    getPortalElement,
+    isPortalReady: false,
+    offset: 0,
+    refreshPosition: false,
+    transitionEnterTimeout: 100,
+    transitionExitTimeout: 100,
+    transitionName: 'popup',
 };
 
-export default ComposedComponent => HigherOrderPopupComponent(
-    connect(popupSelector)(HOCPopup(ComposedComponent)), TYPE_POPUP);
+export default connect(popupSelector)(Popup);

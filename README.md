@@ -1,11 +1,16 @@
 ## React Redux Popup
 
-This is set of higher order components that enable popup behavior using react and redux.  I've tried to not define any styles on it so that the user can define their own style.  At least that's what I'm shooting for, but that might change in the future, based on the needs...
+Set of components to handle modal dialog and popups with redux actions.
+
+### Version 3.0
+ - Big changes from 2.x.x. Instead of using HOC to decorate the Popup or Modal containers, I've used render function property to define the view component on the Popup. I believe using render function property makes it easier to define the property that only applies to the component, which makes easier for doing flowtypes and debugging later.
+ - React v16 only, because it leverages its [Portal API](https://reactjs.org/blog/2017/09/26/react-v16.0.html#portals))
+ - For React v15.5 - use version 2.x
 
 ### Features
- - Portal design
+ - Portal design - benefit of the portal is that you don't have to mess with `z-index`.
  - Auto positioning based on the resize and scrolling events (See [Scrolling Section](https://github.com/ryank109/react-redux-popup#scrolling))
- - Smart positioning based on the popup content size and available space
+ - Smart positioning based on the popup content size and available window space
 
 ### Redux Actions
  - `openPopup(id)`
@@ -13,41 +18,42 @@ This is set of higher order components that enable popup behavior using react an
  - `closePopup(id)`
     - `id`: id of the popup to close
  - `refreshPopupPosition()`
-    - Refresh popup position, such as on scroll. The refreshing is throttled, so that you don't have to throttle in your call.
+    - Refresh popup position, such as on scroll. The refreshing is throttled (with `requestAnimationFrame`), so that you don't have to throttle in your call.
 
-### Higher Order Components
+### Components
  - **Modal** - creates a modal in the center of the screen with layover, so that nothing can be clicked outside.  Must dispatch `closePopup` from the modal in order to close it
    - Properties:
      - `id` - required id
-     - `popupClassName` - the modal class name
+     - `className` - the modal class name
+     - `getPortalElement` - optional portal element, or define `Portal` component elsewhere and let it take care of this
      - `layoverClassName` - the layover class name
+     - `render` - the required render function
      - `style` - optional styles to apply on the modal
+     - `transitionEnterTimeout` - enter transition time (defaults to 300ms)
+     - `transitionExitTimeout` - exit transition time (defaults to 300ms)
+     - `transitionName` - the transition name. Defaults to `modal`. See [Animation](https://github.com/ryank109/react-redux-popup#animation) for more details
 
  - **Popup** - creates a popup on the location specified in `options` argument on `openPopup`.  Clicking outside of the popup should close this popup or with dispatching `closePopup` action.
    - Properties:
      - `anchor` - [default to 'bottom'] `bottom`|`left`|`right`|`top`
+     - `className` - the popup class name
      - `closePopup` - optionally define closePopup handler
      - `getRect` - the required function to describe the position that the popup should appear. The return of the function should be same as `element.getBoundingClientRect()` object or use that for simplicity. i.e. `getRect={() => element.getBoundingClientRect()}`
+     - `getPortalElement` - optional portal element, or define `Portal` component elsewhere and let it take care of this
      - `id` - required id
-     - `popupClassName` - the popup class name
+     - `render` - the required render function
      - `style` - optional styles to apply on the popup
-     - `offset` - the offset distance
+     - `offset` - the offset distance from the anchored element in pixels
+     - `transitionEnterTimeout` - enter transition time (defaults to 100ms)
+     - `transitionExitTimeout` - exit transition time (defaults to 100ms)
+     - `transitionName` - the transition name. Defaults to `popup`. See [Animation](https://github.com/ryank109/react-redux-popup#animation) for more details
 
-### Portal Component
-This component is the component where the popups are rendered to.  So, it's important that this component is specified after the main body so that popups are rendered on top of everything else.  The properties to this component mostly deals with the animation.
-
- - Properties:
-   - `modalTransitionName`: [default to 'modal'] used for css animation
-   - `modalTransitionEnterTimeout`: [default to 0] the modal enter animation duration in miliseconds
-   - `modalTransitionLeaveTimeout`: [default to 0] the modal leave animation duration in miliseconds
-   - `popupTransitionName`: [default to 'popup'] used for css animation
-   - `popupTransitionEnterTimeout`: [default to 0] the popup enter animation duration in miliseconds
-   - `popupTransitionLeaveTimeout`: [default to 0] the popup leave animation duration in miliseconds
+ - **Portal** - this component is where the popup and modal will be rendered to.  Or you can define your own portal element and pass that to `Modal` and/or `Popup` components via `getPortalElement` property.
 
 ### Usage
 
-#### Hook to the Application
-When you want the contents of the popup to the store, or if we need to popup another popup within a popup, the store context is needed. `Portal` is the way to include the store context without having to pass in the store to the components. Include the `Portal` within the `Provider`. It doesn't matter where you define it, it just needs to be after the main app component to show the popups on top of the app.
+#### Define portal
+`Portal` component basically defines where your modal or popup should be rendering on.  So define this below your app root or just below the App component.
 
 ```javascript
 import { Portal } from 'react-redux-popup';
@@ -62,6 +68,14 @@ render(
 , document.body);
 ```
 
+Alternatively, you can define your own portal element and assign it to `Modal` and `Popup` component.  One caveat to this is that this portal element must be defined before the `Modal` or `Popup` component gets mounted.
+
+```javascript
+<Popup
+    getPortalElement={() => document.getElementById('portalRoot')}
+/>
+```
+
 #### Reducer
 ```javascript
 import { combineReducers, createStore } from 'redux';
@@ -74,52 +88,36 @@ const store = createStore(reducers);
 ```
 
 #### Component
-
-popup-menu.js
 ```javascript
-import { Component } from 'react';
-import { Popup } from 'react-redux-popup';
-
-class PopupMenu extends Component {
-    render() {
-        return // your popup menu content
-    }
-}
-
-export default Popup(PopupMenu);
-```
-
-app.js
-```javascript
+import { PureComponent } from 'react-redux-popup';
 import { connect } from 'react-redux';
-import { openPopup } from 'react-redux-popup';
-import PopupMenu from './popup-menu';
+import PopupView from 'popup-view';
 
-class App extends Component {
-    render() {
-        return (
-            <div>
-                <button
-                    refs={e => { this.elem = e; }}
-                    onClick={() => this.props.openPopup('popup1'))}
-                />
-                <PopupMenu
-                    getRect={() => this.elem.getBoundingClientRect()}
-                    id="popup1"
-                    popupClassName="popup"
-                />
-            </div>
-        );
-    }
-}
+// you can connect the view like this, then pass to render prop
+const ConnectedView = connect()(PopupView);
 
-export default connect(null, { openPopup })(App);
+let elem;
+export default props => (
+    <div>
+        <button
+            onClick={() => props.openPopup('popup1')}
+            ref={ btn => { elem = btn; }}
+        >
+            Open
+        </button>
+        <Popup
+            getRect={() => elem.getBoundingClientRect()}
+            id="popup1"
+            render={() => <ConnectedView />}
+        />
+    </div>
+);
 ```
 
 ### Animation
 
-Animation support has been added with [ReactCSSTransitionGroup](https://facebook.github.io/react/docs/animation.html).
-To use, you must specify transition enter/leave timeout properties for `Portal` and define css to handle the animation and define the following styles:
+Animation support has been added with [ReactTransitionGroup](https://reactjs.org/docs/animation.html).
+To use, you must specify transition enter/exit timeout properties for the components and define css to handle the animation and define the following styles.  **Note** version 2.x had `leave` for exit transition in accordance with the version of `react-transition-group` that it was using.  The 3.x uses `exit` to follow the latest version of `react-transition-group`.
 
 ```css
 .modal-enter .modal-container {
@@ -130,25 +128,25 @@ To use, you must specify transition enter/leave timeout properties for `Portal` 
 }
 .modal-enter.modal-enter-active .modal-layover {
 }
-.modal-leave .modal-container {
+.modal-exit .modal-container {
 }
-.modal-leave .modal-layover {
+.modal-exit .modal-layover {
 }
-.modal-leave.modal-leave-active .modal-container {
+.modal-exit.modal-exit-active .modal-container {
 }
-.modal-leave.modal-leave-active .modal-layover {
+.modal-exit.modal-exit-active .modal-layover {
 }
 
 .popup-enter {
 }
 .popup-enter.popup-enter-active {
 }
-.popup-leave {
+.popup-exit {
 }
-.popup-leave.popup-leave-active {
+.popup-exit.popup-exit-active {
 }
 ```
 
 ### Scrolling
 
-Scrolling event isn't something that can't be watched from global document, so the solution is to call `refreshPopupPosition` action to refresh the positions on the popups that are open. In most cases, there should be only one `Popup` open at a time. `Modal` doesn't get repositioned from this action.
+Scrolling event isn't something that can't be watched from global document, so the solution is to call `refreshPopupPosition` action to refresh the positions on the popups that are open. `Modal` doesn't get repositioned from this action.
