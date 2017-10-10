@@ -68,11 +68,11 @@ render(
 , document.body);
 ```
 
-Alternatively, you can define your own portal element and assign it to `Modal` and `Popup` component.  One caveat to this is that this portal element must be defined before the `Modal` or `Popup` component.
+Alternatively, you can define your own portal element and assign it to `Modal` and `Popup` component.  One caveat to this is that this portal element must be defined before the `Modal` or `Popup` component gets mounted.
 
 ```javascript
 <Popup
-    getPortalElement={document.getElementById('portalRoot')}
+    getPortalElement={() => document.getElementById('portalRoot')}
 />
 ```
 
