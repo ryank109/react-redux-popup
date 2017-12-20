@@ -56,7 +56,17 @@ TransitionWrapper.propTypes = {
     render: PropTypes.func.isRequired,
     transitionEnterTimeout: PropTypes.number.isRequired,
     transitionExitTimeout: PropTypes.number.isRequired,
-    transitionName: PropTypes.string.isRequired,
+    transitionName: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.shape({
+            appear: PropTypes.string,
+            appearActive: PropTypes.string,
+            enter: PropTypes.string,
+            enterActive: PropTypes.string,
+            exit: PropTypes.string,
+            exitActive: PropTypes.string,
+        }),
+    ]).isRequired,
 };
 
 TransitionWrapper.defaultProps = {

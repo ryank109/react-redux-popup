@@ -31,7 +31,7 @@ Set of components to handle modal dialog and popups with redux actions.
      - `style` - optional styles to apply on the modal
      - `transitionEnterTimeout` - enter transition time (defaults to 300ms)
      - `transitionExitTimeout` - exit transition time (defaults to 300ms)
-     - `transitionName` - the transition name. Defaults to `modal`. See [Animation](https://github.com/ryank109/react-redux-popup#animation) for more details
+     - `transitionName` - the transition name. Defaults to `modal`. See [Animation](https://github.com/ryank109/react-redux-popup#animation) for more details. This property directly translates to [classNames](https://reactcommunity.org/react-transition-group/#CSSTransition-prop-classNames) property from CSSTransition, so you can also use the object to define specific class names.
 
  - **Popup** - creates a popup on the location specified in `options` argument on `openPopup`.  Clicking outside of the popup should close this popup or with dispatching `closePopup` action.
    - Properties:
@@ -46,7 +46,7 @@ Set of components to handle modal dialog and popups with redux actions.
      - `offset` - the offset distance from the anchored element in pixels
      - `transitionEnterTimeout` - enter transition time (defaults to 100ms)
      - `transitionExitTimeout` - exit transition time (defaults to 100ms)
-     - `transitionName` - the transition name. Defaults to `popup`. See [Animation](https://github.com/ryank109/react-redux-popup#animation) for more details
+     - `transitionName` - the transition name. Defaults to `popup`. See [Animation](https://github.com/ryank109/react-redux-popup#animation) for more details. This property directly translates to [classNames](https://reactcommunity.org/react-transition-group/#CSSTransition-prop-classNames) property from CSSTransition, so you can also use the object to define specific class names
 
  - **Portal** - this component is where the popup and modal will be rendered to.  Or you can define your own portal element and pass that to `Modal` and/or `Popup` components via `getPortalElement` property.
 
