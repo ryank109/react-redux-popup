@@ -35,6 +35,7 @@ class Menus extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            anchors: [ 'top', 'bottom', 'left', 'right' ],
             menus: [ menu1, menu2, menu3, menu4 ]
         };
         this.menu = {};
@@ -57,6 +58,7 @@ class Menus extends Component {
         return this.state.menus.map(
             (menu, index) => (
                 <PopupMenu
+                    anchor={this.state.anchors[index]}
                     getRect={() => this.menu[index].getBoundingClientRect()}
                     id={`${index}`}
                     key={index}

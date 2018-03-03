@@ -20,6 +20,7 @@ PopupMenu.propTypes = {
 
 export default props => (
     <Popup
+        anchor={props.anchor}
         className="popup-menu"
         getRect={props.getRect}
         id={props.id}
