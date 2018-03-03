@@ -4,3 +4,16 @@
 # See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 layout: default
 ---
+
+## What goes here?
+
+* some content
+
+```javascript
+const foo = () => 3;
+foo();
+
+// console.log(3);
+```
+
+<iframe src="/example1.html" height="300px" width="300px" />
