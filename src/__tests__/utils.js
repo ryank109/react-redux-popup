@@ -460,4 +460,108 @@ describe('utils', function() {
             top: 70
         });
     });
+
+    it('should anchor to bottom when enough space below and window has scrolled', () => {
+        window.scrollX = 20;
+        window.scrollY = 30;
+
+        const anchor = 'bottom';
+        const rect = { bottom: 50, left: 10, right: 50, top: 10 };
+        const popupWidth = 100;
+        const popupHeight = 100;
+        const windowWidth = 300;
+        const windowHeight = 300;
+        const offset = 10;
+
+        expect(getPopupPosition(
+            anchor,
+            rect,
+            popupWidth,
+            popupHeight,
+            windowWidth,
+            windowHeight,
+            offset
+        )).toEqual({
+            left: 30,
+            top: 90
+        });
+    });
+
+    it('should anchor to top when enough space above and window has scrolled', () => {
+        window.scrollX = 20;
+        window.scrollY = 30;
+
+        const anchor = 'top';
+        const rect = { bottom: 290, left: 10, right: 50, top: 250 };
+        const popupWidth = 100;
+        const popupHeight = 100;
+        const windowWidth = 300;
+        const windowHeight = 300;
+        const offset = 10;
+
+        expect(getPopupPosition(
+            anchor,
+            rect,
+            popupWidth,
+            popupHeight,
+            windowWidth,
+            windowHeight,
+            offset
+        )).toEqual({
+            left: 30,
+            top: 170
+        });
+    });
+
+    it('should anchor to right when enough space on the right and window has scrolled', () => {
+        window.scrollX = 20;
+        window.scrollY = 30;
+
+        const anchor = 'right';
+        const rect = { bottom: 50, left: 10, right: 50, top: 10 };
+        const popupWidth = 100;
+        const popupHeight = 100;
+        const windowWidth = 300;
+        const windowHeight = 300;
+        const offset = 10;
+
+        expect(getPopupPosition(
+            anchor,
+            rect,
+            popupWidth,
+            popupHeight,
+            windowWidth,
+            windowHeight,
+            offset
+        )).toEqual({
+            left: 80,
+            top: 40
+        });
+    });
+
+    it('should anchor to left when enough space on the left and window has scrolled', () => {
+        window.scrollX = 20;
+        window.scrollY = 30;
+
+        const anchor = 'left';
+        const rect = { bottom: 50, left: 250, right: 290, top: 10 };
+        const popupWidth = 100;
+        const popupHeight = 100;
+        const windowWidth = 300;
+        const windowHeight = 300;
+        const offset = 10;
+
+        expect(getPopupPosition(
+            anchor,
+            rect,
+            popupWidth,
+            popupHeight,
+            windowWidth,
+            windowHeight,
+            offset
+        )).toEqual({
+            left: 160,
+            top: 40
+        });
+    });
 });
