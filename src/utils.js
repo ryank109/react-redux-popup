@@ -47,14 +47,14 @@ export function getPopupPosition(
                 windowWidth,
                 popupWidth,
                 rect.left,
-                rect.right) + window.scrollX,
+                rect.right) + window.pageXOffset,
             top: calculatePosition(
                 windowHeight,
                 popupHeight,
                 rect.top,
                 rect.bottom,
                 offset,
-                anchor === 'bottom') + window.scrollY
+                anchor === 'bottom') + window.pageYOffset
         };
     default: // left and right
         return {
@@ -64,12 +64,12 @@ export function getPopupPosition(
                 rect.left,
                 rect.right,
                 offset,
-                anchor === 'right') + window.scrollX,
+                anchor === 'right') + window.pageXOffset,
             top: adjustPosition(
                 windowHeight,
                 popupHeight,
                 rect.top,
-                rect.bottom) + window.scrollY
+                rect.bottom) + window.pageYOffset
         };
     }
 }

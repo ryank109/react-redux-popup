@@ -462,8 +462,8 @@ describe('utils', function() {
     });
 
     it('should anchor to bottom when enough space below and window has scrolled', () => {
-        window.scrollX = 20;
-        window.scrollY = 30;
+        window.pageXOffset = 20;
+        window.pageYOffset = 30;
 
         const anchor = 'bottom';
         const rect = { bottom: 50, left: 10, right: 50, top: 10 };
@@ -488,8 +488,8 @@ describe('utils', function() {
     });
 
     it('should anchor to top when enough space above and window has scrolled', () => {
-        window.scrollX = 20;
-        window.scrollY = 30;
+        window.pageXOffset = 20;
+        window.pageYOffset = 30;
 
         const anchor = 'top';
         const rect = { bottom: 290, left: 10, right: 50, top: 250 };
@@ -514,8 +514,8 @@ describe('utils', function() {
     });
 
     it('should anchor to right when enough space on the right and window has scrolled', () => {
-        window.scrollX = 20;
-        window.scrollY = 30;
+        window.pageXOffset = 20;
+        window.pageYOffset = 30;
 
         const anchor = 'right';
         const rect = { bottom: 50, left: 10, right: 50, top: 10 };
@@ -540,8 +540,8 @@ describe('utils', function() {
     });
 
     it('should anchor to left when enough space on the left and window has scrolled', () => {
-        window.scrollX = 20;
-        window.scrollY = 30;
+        window.pageXOffset = 20;
+        window.pageYOffset = 30;
 
         const anchor = 'left';
         const rect = { bottom: 50, left: 250, right: 290, top: 10 };

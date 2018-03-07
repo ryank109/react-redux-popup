@@ -8,13 +8,23 @@ import { Portal } from 'react-redux-popup';
 class App extends Component {
     constructor(props) {
         super(props);
-        this.openModal = () => this.props.openPopup('modal1');
+        this.openModal = () => props.openPopup('modal1');
+        this.scroll = () => props.refreshPopupPosition();
     }
+
+    componentDidMount() {
+        window.addEventListener('scroll', this.scroll);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.scroll);
+    }
+
     render() {
         return (
             <div
                 style={{overflow:'auto', height:'400px'}}
-                onScroll={this.scroll.bind(this)}
+                onScroll={this.scroll}
                 ref={div => { this.containerElement = div; }}>
                 <button onClick={this.openModal}>Open Modal</button>
                 <div className="abc" style={{height:'1000px'}}>
@@ -34,10 +44,6 @@ class App extends Component {
                 />
             </div>
         );
-    }
-
-    scroll(event) {
-        this.props.refreshPopupPosition();
     }
 }
 
