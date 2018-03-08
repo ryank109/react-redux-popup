@@ -2,4 +2,5 @@ _site
 .sass-cache
 .jekyll-metadata
 .ruby-version
+lib
 node_modules
