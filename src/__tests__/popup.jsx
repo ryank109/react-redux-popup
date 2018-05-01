@@ -1,10 +1,12 @@
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { closePopup } from 'rrp/actions';
-import { Popup, closePopupHandler, popupSelector } from 'rrp/popup';
+import { Popup, popupSelector } from 'rrp/popup';
 
 describe('popup', () => {
     // eslint-disable-next-line no-console
     const origConsoleError = console.error;
+    const origAddEventListener = window.addEventListener;
+    const origRemoveEventListener = window.removeEventListener;
 
     const handler = () => true;
     const getRect = () => ({
@@ -18,6 +20,8 @@ describe('popup', () => {
     afterEach(() => {
         // eslint-disable-next-line no-console
         console.error = origConsoleError;
+        window.addEventListener = origAddEventListener;
+        window.removeEventListener = origRemoveEventListener;
     });
 
     it('should get the state', () => {
@@ -78,12 +82,22 @@ describe('popup', () => {
 
     it('should call correct close popup handler', () => {
         const mockDispatch = jest.fn();
-        closePopupHandler('popupId', null, mockDispatch)();
+        const instance = new Popup({
+            dispatch: mockDispatch,
+            id: 'popupId',
+        });
+        instance.closePopupHandler();
         expect(mockDispatch).toHaveBeenCalledTimes(1);
         expect(mockDispatch).toHaveBeenCalledWith(closePopup('popupId'));
 
         const mockClosePopup = jest.fn();
-        closePopupHandler('popupId', mockClosePopup, mockDispatch)();
+        const instance2 = new Popup({
+            closePopup: mockClosePopup,
+            dispatch: mockDispatch,
+            id: 'popupId',
+        });
+
+        instance2.closePopupHandler();
         expect(mockDispatch).toHaveBeenCalledTimes(1);
         expect(mockClosePopup).toHaveBeenCalledTimes(1);
         expect(mockClosePopup).toHaveBeenCalledWith('popupId');

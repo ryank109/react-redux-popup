@@ -1,3 +1,4 @@
+import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { closePopup } from './actions';
@@ -7,38 +8,43 @@ import TransitionWrapper from './transition-wrapper';
 
 export const popupSelector = state => state.popup;
 
-export function closePopupHandler(id, callback, dispatch) {
-    return () => {
-        if (callback) {
-            callback(id);
-            return;
-        }
-        dispatch(closePopup(id));
-    };
-}
+export class Popup extends PureComponent {
+    constructor(props) {
+        super(props);
+        this.closePopupHandler = () => {
+            if (props.closePopup) {
+                props.closePopup(props.id);
+                return;
+            }
+            props.dispatch(closePopup(props.id));
+        };
+    }
 
-export const Popup = props => (
-    <TransitionWrapper
-        getPortalElement={props.getPortalElement}
-        isOpen={!!props[props.id]}
-        isPortalReady={props.isPortalReady}
-        render={() => (
-            <PopupComponent
-                anchor={props.anchor}
-                className={props.className}
-                closePopup={closePopupHandler(props.id, props.closePopup, props.dispatch)}
-                getRect={props.getRect}
-                offset={props.offset}
-                refreshPosition={props.refreshPosition}
-                render={props.render}
-                style={props.style}
+    render() {
+        return (
+            <TransitionWrapper
+                getPortalElement={this.props.getPortalElement}
+                isOpen={!!this.props[this.props.id]}
+                isPortalReady={this.props.isPortalReady}
+                render={() => (
+                    <PopupComponent
+                        anchor={this.props.anchor}
+                        className={this.props.className}
+                        closePopup={this.closePopupHandler}
+                        getRect={this.props.getRect}
+                        offset={this.props.offset}
+                        refreshPosition={this.props.refreshPosition}
+                        render={this.props.render}
+                        style={this.props.style}
+                    />
+                )}
+                transitionEnterTimeout={this.props.transitionEnterTimeout}
+                transitionExitTimeout={this.props.transitionExitTimeout}
+                transitionName={this.props.transitionName}
             />
-        )}
-        transitionEnterTimeout={props.transitionEnterTimeout}
-        transitionExitTimeout={props.transitionExitTimeout}
-        transitionName={props.transitionName}
-    />
-);
+        );
+    }
+}
 
 Popup.propTypes = {
     anchor: PropTypes.oneOf(['bottom', 'left', 'right', 'top']).isRequired,
